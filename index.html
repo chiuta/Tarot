@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; font-src 'none'; connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#2A0F1C">
+<meta name="color-scheme" content="light">
+<title>Tarot — curs interactiv</title>
+<meta name="description" content="Curs interactiv despre tarot: istoric, structura pachetului de 78 de cărți, patru niveluri de curs, exerciții practice, diagrama Călătoriei Nebunului, anexă comparativă pe tradiții (Marsilia, Rider-Waite-Smith, Thoth), glosar, jurnal și autoevaluare. Aplicație offline, fără frontiere.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tarot — curs interactiv">
+<meta property="og:description" content="Curs interactiv despre tarot: istoric, structura pachetului de 78 de cărți, patru niveluri de curs, exerciții practice, diagrama Călătoriei Nebunului, anexă comparativă pe tradiții (Marsilia, Rider-Waite-Smith, Thoth), glosar, jurnal și autoevaluare. Aplicație offline, fără frontiere.">
+<meta property="og:locale" content="ro_RO">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Crect width=%2716%27 height=%2716%27 rx=%273%27 fill=%27%232A0F1C%27/%3E%3C/svg%3E">
+<noscript><style>.panel{display:block !important;margin-bottom:40px}.toolbar,.nav-toggle,#quiz,.draw-box,#calcForm,.journal-btns{display:none !important}</style></noscript>
+<style>
+  :root{
+    --bg:#F3E9D2;
+    --bg-panel:#FBF5E7;
+    --ink:#2A0F1C;
+    --ink-soft:#5C3A44;
+    --line:#D9C9A3;
+    --sidebar-bg:#2A0F1C;
+    --gold:#C9A227;
+    --gold-deep:#76590F;
+    --wine:#7A2438;
+    --wine-soft:#F1DEE0;
+    --radius-s:4px;
+    --radius-m:10px;
+    --serif:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,"Noto Serif",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --maxw:760px;
+    --focus:#76590F;
+    --note-bg:#F1DEE0;
+    --note-line:#7A2438;
+    --ghost:#7A2438;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.62;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--wine-soft)}
+  a{color:var(--wine)}
+  .app{display:flex;min-height:100vh}
+
+  .sidebar{width:272px;flex:0 0 272px;background:var(--sidebar-bg);color:#E8D9C4;padding:28px 20px 40px;position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid #4A1D2C}
+  .brand{margin-bottom:26px}
+  .brand .mark{width:56px;height:56px;margin-bottom:12px;display:block}
+  .brand h1{font-family:var(--serif);font-size:1.5rem;font-weight:700;margin:0 0 4px;color:#F3E9D2;letter-spacing:.01em}
+  .brand p{margin:0;font-size:.82rem;color:#B89578;max-width:24ch}
+  .navgroup{margin-top:22px}
+  .navgroup h2{font-size:.72rem;color:#A98B73;margin:0 0 8px;font-weight:700;letter-spacing:.05em}
+  .navlist{list-style:none;margin:0 0 6px;padding:0}
+  .navlist a{display:flex;align-items:baseline;gap:8px;text-decoration:none;color:#D9C4A9;padding:7px 10px;border-radius:var(--radius-s);font-size:.92rem;border-left:2px solid transparent}
+  .navlist a .num{color:#A98B73;font-size:.8em;font-weight:700}
+  .navlist a:hover{background:rgba(201,162,39,.1);color:#fff}
+  .navlist a.active{background:rgba(201,162,39,.22);color:#fff;border-left:2px solid var(--gold)}
+  .nav-toggle{display:none;position:fixed;top:14px;left:14px;z-index:50;width:42px;height:42px;border-radius:50%;background:var(--sidebar-bg);color:#F3E9D2;border:1px solid #4A1D2C;font-size:1.1rem;box-shadow:0 3px 10px rgba(0,0,0,.35)}
+
+  .toolbar{
+    position:sticky;top:0;z-index:10;
+    display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;
+    background:var(--bg);padding:10px 0 16px;margin-bottom:10px;
+    border-bottom:1px solid var(--line);
+  }
+  .search-wrap{position:relative;flex:1 1 240px;max-width:340px}
+  .search-wrap input{
+    width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:var(--radius-s);
+    font-size:.9rem;background:var(--bg-panel);color:var(--ink);font-family:var(--sans);
+  }
+  .search-wrap input:focus{outline:none;border-color:var(--gold-deep)}
+  .search-results{
+    display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;
+    background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius-s);
+    box-shadow:0 8px 22px rgba(0,0,0,.16);max-height:260px;overflow-y:auto;z-index:20;
+  }
+  .search-results.show{display:block}
+  .sr-item{padding:9px 12px;font-size:.88rem;cursor:pointer;border-bottom:1px solid var(--line);color:var(--ink)}
+  .sr-item:last-child{border-bottom:none}
+  .sr-item:hover{background:var(--wine-soft)}
+  .sr-empty{padding:10px 12px;font-size:.85rem;color:var(--ink-soft)}
+  .tool-btns{display:flex;gap:6px}
+  .tool-btns button{
+    width:38px;height:38px;border-radius:var(--radius-s);border:1px solid var(--line);
+    background:var(--bg-panel);color:var(--ink);font-size:1.05rem;cursor:pointer;
+  }
+  .tool-btns button:hover{border-color:var(--gold-deep);color:var(--wine)}
+  .tool-btns button.active{background:var(--wine);color:#F3E9D2;border-color:var(--wine)}
+  .tool-btns button:disabled{opacity:.35;cursor:not-allowed}
+
+  .content{flex:1;min-width:0;padding:24px 48px 100px}
+  .panel{display:none;max-width:var(--maxw);margin:0 auto;animation:fade .35s ease}
+  .panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+  .eyebrow{font-size:.85rem;color:var(--wine);margin:0 0 6px;font-weight:700}
+  h2.title{font-family:var(--serif);font-size:2.1rem;font-weight:700;margin:0 0 18px;line-height:1.16;color:var(--ink)}
+  h3{font-family:var(--serif);font-size:1.32rem;margin:32px 0 10px;color:var(--ink)}
+  p{margin:0 0 15px;color:var(--ink-soft);max-width:66ch}
+  p.lede{font-size:1.12rem;color:var(--ink);max-width:60ch}
+  ul.plain,ol.plain{margin:0 0 15px;padding-left:22px;color:var(--ink-soft)}
+  ul.plain li,ol.plain li{margin-bottom:7px}
+  strong{color:var(--ink)}
+
+  .hero-visual{width:100%;max-width:130px;margin:0 auto 8px;display:block}
+
+  .card{background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius-m);padding:20px 22px;margin:0 0 16px}
+  .card h4{margin:0 0 8px;font-family:var(--serif);font-size:1.08rem;color:var(--ink)}
+  .card p{margin:0;font-size:.95rem}
+
+  .exercise{background:#FBF0DD;border:1px solid var(--gold);border-radius:var(--radius-m);padding:18px 20px;margin:22px 0}
+  .exercise .ex-label{font-size:.78rem;font-weight:700;color:var(--wine);margin:0 0 8px;display:block}
+  .exercise ol,.exercise ul{margin:6px 0 0;padding-left:20px}
+  .exercise li{margin-bottom:6px;font-size:.94rem;color:var(--ink-soft)}
+  .exercise p{font-size:.94rem;margin:6px 0 0}
+
+  .timeline{border-left:2px solid var(--line);margin:24px 0 0;padding:0 0 0 22px}
+  .tl-item{position:relative;padding-bottom:26px}
+  .tl-item::before{content:"";position:absolute;left:-27px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--gold)}
+  .tl-item .yr{font-family:var(--serif);color:var(--gold-deep);font-weight:700;font-size:1rem}
+  .tl-item p{margin:4px 0 0}
+
+  .suits{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+  .suit-card{background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius-s);padding:14px 10px;text-align:center}
+  .suit-card .sym{font-size:1.7rem;color:var(--wine);margin-bottom:6px}
+  .suit-card .nm{font-family:var(--serif);font-weight:700;font-size:.92rem;color:var(--ink)}
+  .suit-card .el{font-size:.76rem;color:var(--ink-soft);margin-top:2px}
+
+  .grade-head{display:flex;align-items:center;gap:16px;margin-bottom:6px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+  .grade-badge{
+    width:52px;height:72px;border-radius:6px;flex:0 0 52px;
+    background:linear-gradient(160deg,var(--wine),var(--ink));
+    border:2px solid var(--gold);color:#F3E9D2;display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-size:1.3rem;font-weight:700;
+  }
+  .grade-head .sub{font-size:.85rem;color:var(--wine);font-weight:600;margin:0 0 2px}
+  .grade-head h2.title{margin:0}
+
+  .focus-row{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0 6px}
+  .focus-item{flex:1 1 160px;background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius-s);padding:12px 14px}
+  .focus-item .lbl{font-size:.72rem;color:var(--wine);font-weight:700;margin-bottom:4px}
+  .focus-item .val{font-size:.94rem;color:var(--ink)}
+
+  .diagram-box{background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius-m);padding:22px;margin:24px 0;text-align:center}
+  .diagram-box svg{max-width:100%;height:auto}
+
+  table.compare{width:100%;border-collapse:collapse;margin:18px 0 28px;font-size:.92rem}
+  table.compare th,table.compare td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.compare th{font-family:var(--serif);font-weight:700;color:var(--ink);border-bottom:2px solid var(--wine);font-size:.9rem}
+  table.compare td{color:var(--ink-soft)}
+  table.compare tr:last-child td{border-bottom:none}
+
+  dl.glossary{margin:0}
+  dl.glossary div{padding:14px 0;border-bottom:1px solid var(--line)}
+  dl.glossary dt{font-family:var(--serif);font-weight:700;color:var(--ink);font-size:1.02rem}
+  dl.glossary dd{margin:4px 0 0;color:var(--ink-soft);font-size:.94rem}
+
+  .note{background:var(--wine-soft);border-left:3px solid var(--wine);border-radius:var(--radius-s);padding:12px 16px;margin:18px 0;font-size:.9rem;color:var(--ink-soft)}
+
+  .journal-area{
+    width:100%;border:1px solid var(--line);border-radius:var(--radius-s);
+    padding:14px;font-family:var(--sans);font-size:.95rem;color:var(--ink);
+    background:var(--bg-panel);resize:vertical;line-height:1.55;
+  }
+  .journal-area:focus{outline:none;border-color:var(--gold-deep)}
+  .journal-btns{display:flex;gap:10px;margin-top:12px}
+  .btn-ghost{background:transparent;color:var(--wine);border:1px solid var(--wine)}
+  .btn-ghost:hover{background:var(--wine-soft);color:var(--ink)}
+
+  #quizRoot .q{background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius-m);padding:18px 20px;margin-bottom:14px}
+  #quizRoot .q p.qtext{font-weight:700;color:var(--ink);margin:0 0 12px;font-size:1rem}
+  #quizRoot .opts{display:flex;flex-direction:column;gap:8px}
+  #quizRoot label{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border:1px solid var(--line);border-radius:var(--radius-s);cursor:pointer;font-size:.94rem}
+  #quizRoot label:hover{border-color:var(--gold)}
+  #quizRoot input{margin-top:3px}
+  #quizRoot label.correct{border-color:var(--gold-deep);background:#F4EAC8}
+  #quizRoot label.wrong{border-color:var(--wine);background:var(--wine-soft)}
+  .qz-explain{font-size:.85rem;color:var(--wine);margin:10px 0 0;display:none}
+  .qz-explain.show{display:block}
+  #quizScore{font-family:var(--serif);font-size:1.3rem;margin:20px 0;padding:18px 22px;background:var(--sidebar-bg);color:#F3E9D2;border-radius:var(--radius-m);display:none}
+  #quizScore.show{display:block}
+  .btn{background:var(--wine);color:#F3E9D2;border:none;padding:11px 22px;border-radius:var(--radius-s);font-size:.95rem;cursor:pointer;font-family:var(--sans);font-weight:600}
+  .btn:hover{background:var(--sidebar-bg)}
+
+  footer.appfoot{max-width:var(--maxw);margin:50px auto 0;color:var(--ink-soft);font-size:.8rem}
+
+  @media (max-width:880px){
+    .sidebar{position:fixed;left:0;top:0;z-index:40;transform:translateX(-100%);transition:transform .25s ease;box-shadow:0 0 30px rgba(0,0,0,.4)}
+    .sidebar.open{transform:translateX(0)}
+    .nav-toggle{display:block}
+    .content{padding:70px 20px 80px}
+    h2.title{font-size:1.6rem}
+    .toolbar{padding-top:0}
+    .suits{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.panel{animation:none}}
+  :focus-visible{outline:2px solid var(--gold-deep);outline-offset:2px}
+
+  @media print{
+    .sidebar,.nav-toggle,.toolbar,.btn,#quizReset{display:none !important}
+    .content{padding:0;background:#fff}
+    body{background:#fff}
+    .app{display:block}
+    .panel{display:block !important;max-width:100%;page-break-after:always;animation:none}
+    .panel:last-child{page-break-after:auto}
+  }
+
+  /* --- audit: accesibilitate, tipar, mobil --- */
+  [hidden]{display:none !important}
+  .visually-hidden{position:absolute !important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .skip-link{position:absolute;left:8px;top:-60px;z-index:100;background:#fff;color:#000;padding:10px 14px;border-radius:4px;border:2px solid #000}
+  .skip-link:focus{top:8px}
+  button.sr-item{display:block;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--line);font:inherit;font-size:.88rem;padding:11px 12px;cursor:pointer;color:var(--ink)}
+  button.sr-item:last-child{border-bottom:none}
+  h2.title:focus{outline:none}
+  .tool-btns button{font-family:var(--sans)}
+  .btn:focus-visible,.tool-btns button:focus-visible,.search-wrap input:focus-visible,.journal-area:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+  .sidebar :focus-visible,.nav-toggle:focus-visible{outline-color:#fff}
+  .tablewrap{overflow-x:auto;margin:18px 0 28px}
+  .tablewrap table.compare{margin:0;min-width:520px}
+  .disclaimer{background:var(--note-bg);border:1px solid var(--note-line);border-left-width:4px;border-radius:var(--radius-s);padding:12px 16px;margin:18px 0;font-size:.92rem;color:var(--ink);max-width:66ch}
+  .disclaimer strong{color:var(--ink)}
+  .decision-note{font-size:.85rem;color:var(--ink-soft);border-top:1px dashed var(--line);margin-top:16px;padding-top:8px;max-width:66ch}
+  footer.appfoot p{font-size:.8rem;max-width:none;margin:0 0 6px}
+  .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  .btn.btn-ghost{background:transparent;color:var(--ghost);border:1px solid var(--ghost)}
+  .btn.btn-ghost:hover{background:var(--note-bg);color:var(--ink)}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  noscript .note{margin:16px}
+  @media (max-width:880px){
+    .sidebar{visibility:hidden;transition:transform .25s ease,visibility 0s linear .25s}
+    .sidebar.open{visibility:visible;transition-delay:0s}
+    .tool-btns button{width:44px;height:44px}
+    .navlist a{padding:12px 10px}
+    .nav-toggle{width:44px;height:44px}
+    .toolbar{gap:8px}
+    .content{overflow-x:hidden}
+  }
+  @media print{
+    .panel{display:none !important}
+    .panel.active{display:block !important;page-break-after:auto}
+    .sr-item,.search-results,.visually-hidden,.skip-link,.draw-box button,#calcForm{display:none !important}
+    .tablewrap{overflow:visible}
+    .tablewrap table.compare{min-width:0}
+    footer.appfoot{display:block;color:#000}
+    a{color:#000}
+  }
+  .draw-box{background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius-m);padding:18px 20px;margin:12px 0 20px}
+  .draw-result{margin:14px 0 0;color:var(--ink)}
+  .draw-result ol{margin:0;padding-left:22px}
+  .draw-result li{margin-bottom:6px;font-size:1.02rem}
+  .draw-result .cname{font-family:var(--serif);font-weight:700}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Sari la conținut</a>
+<button class="nav-toggle" id="navToggle" aria-label="Deschide meniul" aria-expanded="false" aria-controls="sidebar">☰</button>
+<div id="liveStatus" class="visually-hidden" role="status" aria-live="polite"></div>
+<div class="app">
+  <nav class="sidebar" id="sidebar" aria-label="Meniu principal">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="20" y="10" width="60" height="80" rx="4" fill="none" stroke="#C9A227" stroke-width="2.5"/>
+        <rect x="28" y="18" width="44" height="64" rx="2" fill="none" stroke="#C9A227" stroke-width="1" opacity=".6"/>
+        <path d="M50 34 L58 50 L50 66 L42 50 Z" fill="#C9A227" opacity=".85"/>
+      </svg>
+      <h1>Tarot</h1>
+      <p>Curs interactiv despre istoria, structura și practica tarotului</p>
+    </div>
+    <div class="navgroup">
+      <h2>Bazele</h2>
+      <ul class="navlist">
+        <li><a href="#intro" data-target="intro" class="active" aria-current="page"><span class="num">·</span> Introducere</a></li>
+        <li><a href="#istoric" data-target="istoric"><span class="num">·</span> Istoric</a></li>
+        <li><a href="#structura" data-target="structura"><span class="num">·</span> Structura pachetului</a></li>
+      </ul>
+    </div>
+    <div class="navgroup">
+      <h2>Cele patru niveluri</h2>
+      <ul class="navlist">
+        <li><a href="#n1" data-target="n1"><span class="num">1</span> Fundamente</a></li>
+        <li><a href="#n2" data-target="n2"><span class="num">2</span> Arcanele Majore</a></li>
+        <li><a href="#n3" data-target="n3"><span class="num">3</span> Arcanele Minore</a></li>
+        <li><a href="#n4" data-target="n4"><span class="num">4</span> Citire profesională</a></li>
+      </ul>
+    </div>
+    <div class="navgroup">
+      <h2>Practică &amp; context</h2>
+      <ul class="navlist">
+        <li><a href="#aplicatii" data-target="aplicatii"><span class="num">·</span> Aplicații practice</a></li>
+        <li><a href="#comparativ" data-target="comparativ"><span class="num">·</span> Tradiții și pachete</a></li>
+        <li><a href="#glosar" data-target="glosar"><span class="num">·</span> Glosar</a></li>
+        <li><a href="#jurnal" data-target="jurnal"><span class="num">·</span> Jurnal</a></li>
+        <li><a href="#quiz" data-target="quiz"><span class="num">·</span> Autoevaluare</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="content" id="main" tabindex="-1">
+    <noscript><div class="note">JavaScript este dezactivat: căutarea, jurnalul, testul și celelalte unelte interactive nu funcționează, dar tot conținutul cursului este afișat mai jos.</div></noscript>
+    <div class="toolbar">
+      <div class="search-wrap">
+        <input type="search" id="searchInput" placeholder="Caută în curs…" aria-label="Căutare în curs" autocomplete="off" spellcheck="false">
+        <div class="search-results" id="searchResults" aria-live="polite"></div>
+      </div>
+      <div class="tool-btns">
+        <button type="button" id="btnPrint" title="Printează secțiunea curentă / exportă PDF" aria-label="Printează secțiunea curentă">⎙</button>
+        <button type="button" id="btnShare" title="Distribuie linkul" aria-label="Distribuie linkul">⤴</button>
+        <button type="button" id="btnFullscreen" title="Ecran complet" aria-label="Ecran complet" aria-pressed="false">⛶</button>
+        <button type="button" id="btnWakeLock" title="Păstrează ecranul activ" aria-label="Păstrează ecranul activ" aria-pressed="false">◐</button>
+      </div>
+    </div>
+
+    <section id="intro" class="panel active">
+      <svg class="hero-visual" viewBox="0 0 120 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="4" y="4" width="112" height="162" rx="8" fill="#FBF5E7" stroke="#C9A227" stroke-width="3"/>
+        <rect x="14" y="14" width="92" height="142" rx="4" fill="none" stroke="#C9A227" stroke-width="1"/>
+        <circle cx="60" cy="60" r="22" fill="none" stroke="#7A2438" stroke-width="2">
+          <animate attributeName="r" values="22;25;22" dur="4s" repeatCount="indefinite"/>
+        </circle>
+        <path d="M60 38 L60 82 M38 60 L82 60" stroke="#7A2438" stroke-width="1.4" opacity=".7"/>
+        <circle cx="60" cy="110" r="4" fill="#C9A227"/>
+      </svg>
+      <p class="eyebrow">Curs interactiv</p>
+      <h2 class="title">Tarot — un pachet de 78 de cărți</h2>
+      <p class="lede">Tarotul este un pachet de 78 de cărți ilustrate, folosit de peste două secole ca instrument de introspecție și divinație. Structura sa — 22 de Arcane Majore și 56 de Arcane Minore — s-a cristalizat treptat, din cărți de joc renascentiste italiene, spre sistemul simbolic complex practicat astăzi.</p>
+      <p>Aplicația parcurge istoricul tarotului, structura completă a pachetului, patru niveluri de curs — de la fundamente până la tehnici de citire profesională, fiecare cu exerciții practice — o diagramă a Călătoriei Nebunului, o comparație între tradițiile majore de pachete, un jurnal de extrageri și un test de autoevaluare.</p>
+      <div class="disclaimer"><strong>Despre ce este (și ce nu este) acest curs.</strong> Tarotul este o tradiție culturală și simbolică, folosită ca instrument de reflecție, creativitate și divertisment. Nu există dovezi științifice că cărțile pot prezice viitorul, diagnostica o boală sau vindeca ceva. Conținutul de aici este educațional și nu înlocuiește sfatul unui medic, psiholog, jurist sau consilier financiar: nu amâna un consult medical și nu renunța la un tratament, nu lua decizii legale sau financiare importante pe baza unei extrageri.</div>
+    </section>
+
+    <section id="istoric" class="panel">
+      <p class="eyebrow">De la joc de cărți la instrument simbolic</p>
+      <h2 class="title">Istoric</h2>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="yr">sec. XV · Italia renascentistă</div>
+          <p>Cele mai vechi pachete documentate — precum <em>Visconti-Sforza</em> — erau folosite ca joc de cărți în curțile nobiliare din nordul Italiei, fără nicio funcție divinatorie atestată la acea vreme.</p>
+        </div>
+        <div class="tl-item">
+          <div class="yr">sec. XVII–XVIII · tradiția de Marsilia</div>
+          <p>În Franța se stabilizează un model de pachet — <em>Tarot de Marseille</em> — tipărit pe scară largă, cu Arcanele Minore ilustrate doar simbolic, prin numărul de simboluri ale culorii, nu prin scene figurative complete.</p>
+        </div>
+        <div class="tl-item">
+          <div class="yr">1781 · Antoine Court de Gébelin</div>
+          <p>Eruditul francez propune, fără dovezi istorice reale, o origine egipteană mistică a tarotului — ipoteză azi respinsă de istorici, dar care a alimentat decisiv transformarea tarotului dintr-un joc de cărți într-un instrument ezoteric.</p>
+        </div>
+        <div class="tl-item">
+          <div class="yr">sfârșitul sec. XVIII · Etteilla</div>
+          <p>Jean-Baptiste Alliette (cunoscut sub pseudonimul „Etteilla”) publică printre primele ghiduri dedicate explicit citirii tarotului ca instrument divinatoriu, contribuind la practica modernă.</p>
+        </div>
+        <div class="tl-item">
+          <div class="yr">1909 · Rider-Waite-Smith</div>
+          <p>Arthur Edward Waite (text și concept) și Pamela Colman Smith (ilustrații) publică pachetul care avea să devină unul dintre cele mai influente în tarotul modern — primul pachet larg răspândit cu <strong>toate</strong> cele 56 de Arcane Minore ilustrate cu scene, nu doar cu simboluri. (Pachete mai vechi, precum Sola Busca din sec. XV, aveau și ele minore figurative, dar fără o circulație comparabilă.)</p>
+        </div>
+        <div class="tl-item">
+          <div class="yr">1940er–1969 · Thoth</div>
+          <p>Aleister Crowley concepe, alături de pictorița Frieda Harris, pachetul <em>Thoth</em> — publicat integral abia în 1969 — care integrează corespondențe astrologice și kabbalistice complexe, distincte de sistemul Waite.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="structura" class="panel">
+      <p class="eyebrow">78 de cărți</p>
+      <h2 class="title">Structura pachetului</h2>
+      <p>Un pachet standard de tarot are 78 de cărți, împărțite în două categorii cu funcții narative diferite.</p>
+      <div class="card">
+        <h4>22 de Arcane Majore</h4>
+        <p>De la <strong>0 — Nebunul</strong> la <strong>XXI — Lumea</strong>, formează o secvență adesea citită ca o călătorie simbolică unică — „Călătoria Nebunului” — care parcurge etape arhetipale de dezvoltare personală: inocență, provocare, criză, transformare, integrare.</p>
+      </div>
+      <div class="card">
+        <h4>56 de Arcane Minore</h4>
+        <p>Patru culori a câte 14 cărți fiecare: Ași până la 10, plus patru cărți de curte (Valet, Cavaler, Regină, Rege) — structură paralelă cărților de joc obișnuite, din care tarotul descinde istoric.</p>
+      </div>
+      <h3>Cele patru culori și elementele lor</h3>
+      <div class="suits">
+        <div class="suit-card"><div class="sym">♣</div><div class="nm">Bastoane</div><div class="el">Foc — acțiune, voință</div></div>
+        <div class="suit-card"><div class="sym">♥</div><div class="nm">Cupe</div><div class="el">Apă — emoție, relații</div></div>
+        <div class="suit-card"><div class="sym">♠</div><div class="nm">Săbii</div><div class="el">Aer — gândire, conflict</div></div>
+        <div class="suit-card"><div class="sym">♦</div><div class="nm">Pentacluri</div><div class="el">Pământ — materie, resurse</div></div>
+      </div>
+    </section>
+
+    <section id="n1" class="panel">
+      <div class="grade-head">
+        <div class="grade-badge">1</div>
+        <div><p class="sub">Nivel de bază</p><h2 class="title">Fundamente</h2></div>
+      </div>
+      <p class="lede">Primul nivel pregătește relația practicianului cu propriul pachet — mai degrabă un ritual de familiarizare decât o tehnică de citire propriu-zisă.</p>
+      <div class="focus-row">
+        <div class="focus-item"><div class="lbl">Focus</div><div class="val">Ritual, familiarizare, prima extragere</div></div>
+        <div class="focus-item"><div class="lbl">Extragere</div><div class="val">O singură carte</div></div>
+      </div>
+      <h3>Ce se învață</h3>
+      <p>Alegerea unui prim pachet (de regulă recomandat un Rider-Waite-Smith sau o variantă apropiată, pentru ilustrațiile narative complete), „curățarea” simbolică a unui pachet nou (baterea cărților cu intenție, uneori însoțită de un ritual personal de conectare) și extragerea unei singure cărți pe zi, ca exercițiu de familiarizare treptată cu imaginile și semnificațiile de bază.</p>
+      <p>Relația cu propriul pachet contează mai mult decât mulți începători anticipează: mulți cititori recomandă evitarea „săriturilor” între mai multe pachete în primele luni, tocmai pentru ca asocierile personale — diferite, inevitabil, de semnificațiile „de carte” — să aibă timp să se stabilizeze.</p>
+      <div class="exercise">
+        <span class="ex-label">Exercițiu practic — ritualul primei cărți</span>
+        <ol class="plain">
+          <li>Ține pachetul în mâini câteva minute, respirând calm, fără să te grăbești să extragi nimic.</li>
+          <li>Amestecă cărțile cu intenția clară: „ce am nevoie să văd azi?”</li>
+          <li>Extrage o singură carte și privește imaginea timp de 2 minute, înainte de a consulta orice ghid de semnificații.</li>
+          <li>Notează, în propriile cuvinte, ce îți sugerează imaginea — abia apoi compară cu o interpretare de referință.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="n2" class="panel">
+      <div class="grade-head">
+        <div class="grade-badge">2</div>
+        <div><p class="sub">Călătoria Nebunului</p><h2 class="title">Arcanele Majore</h2></div>
+      </div>
+      <p class="lede">Al doilea nivel parcurge cele 22 de Arcane Majore ca o narațiune arhetipală unitară, nu ca o listă separată de simboluri.</p>
+      <div class="focus-row">
+        <div class="focus-item"><div class="lbl">Structură</div><div class="val">22 cărți, 0–XXI</div></div>
+        <div class="focus-item"><div class="lbl">Abordare</div><div class="val">Parcurs narativ, nu memorare izolată</div></div>
+      </div>
+      <h3>Ce se învață</h3>
+      <p>Cursul grupează cele 22 de arcane în etape ale „Călătoriei Nebunului”: pornirea (Nebunul, Magicianul, Preoteasa), provocarea autorității și structurilor exterioare (Împăratul, Ierofantul, Îndrăgostiții), confruntarea cu criza și transformarea (Moartea, Cumpătarea, Diavolul, Turnul) și, în final, integrarea (Steaua, Luna, Soarele, Judecata, Lumea). Fiecare carte e învățată în relație cu cele vecine, nu izolat.</p>
+
+      <div class="diagram-box">
+        <svg viewBox="0 0 480 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama Călătoriei Nebunului">
+          <path d="M20 110 Q 110 20 160 90 T 300 60 T 460 100" fill="none" stroke="#D9C9A3" stroke-width="3"/>
+          <g font-family="Georgia, serif" font-size="12" font-weight="700" fill="#2A0F1C" text-anchor="middle">
+            <circle cx="20" cy="110" r="9" fill="#7A2438"><animate attributeName="r" values="9;11;9" dur="2.6s" begin="0s" repeatCount="indefinite"/></circle>
+            <text x="20" y="132">0</text>
+            <text x="20" y="146" font-size="9" font-weight="400">Pornire</text>
+            <circle cx="160" cy="90" r="9" fill="#C9A227"><animate attributeName="r" values="9;11;9" dur="2.6s" begin=".6s" repeatCount="indefinite"/></circle>
+            <text x="160" y="70">VI</text>
+            <text x="160" y="126" font-size="9" font-weight="400">Provocare</text>
+            <circle cx="300" cy="60" r="9" fill="#7A2438"><animate attributeName="r" values="9;11;9" dur="2.6s" begin="1.2s" repeatCount="indefinite"/></circle>
+            <text x="300" y="40">XIII</text>
+            <text x="300" y="96" font-size="9" font-weight="400">Criză</text>
+            <circle cx="460" cy="100" r="9" fill="#C9A227"><animate attributeName="r" values="9;11;9" dur="2.6s" begin="1.8s" repeatCount="indefinite"/></circle>
+            <text x="460" y="122">XXI</text>
+            <text x="443" y="136" font-size="9" font-weight="400">Integrare</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="exercise">
+        <span class="ex-label">Exercițiu practic — cartografierea propriei etape</span>
+        <p>Din cele 22 de Arcane Majore, alege trei care rezonează cu etapa de viață pe care o traversezi acum — nu neapărat din cele patru grupuri numite mai sus. Pentru fiecare, notează într-o frază de ce ai ales-o. Nu există răspuns greșit: exercițiul antrenează recunoașterea intuitivă a arhetipurilor, pasul premergător oricărei citiri pentru altcineva.</p>
+      </div>
+    </section>
+
+    <section id="n3" class="panel">
+      <div class="grade-head">
+        <div class="grade-badge">3</div>
+        <div><p class="sub">Cele patru culori</p><h2 class="title">Arcanele Minore</h2></div>
+      </div>
+      <p class="lede">Al treilea nivel acoperă cele 56 de cărți rămase, organizate pe culori, numere și cărți de curte.</p>
+      <div class="focus-row">
+        <div class="focus-item"><div class="lbl">Structură</div><div class="val">4 culori × 14 cărți</div></div>
+        <div class="focus-item"><div class="lbl">Metodă</div><div class="val">Element + număr + rol de curte</div></div>
+      </div>
+      <h3>Ce se învață</h3>
+      <p>Practicantul învață să combine semnificația elementului culorii (foc, apă, aer, pământ) cu semnificația numerică generică (Așii — început; cărțile 2–9 — dezvoltare progresivă; 10 — încheiere de ciclu) și cu rolul cărților de curte (Valet — mesaj/începător; Cavaler — acțiune/mișcare; Regină — maturitate interiorizată; Rege — maturitate exteriorizată/autoritate) — o metodă combinatorie care reduce nevoia de memorare a 56 de semnificații separate.</p>
+      <div class="exercise">
+        <span class="ex-label">Exercițiu practic — metoda combinatorie</span>
+        <p>Extrage o carte oarecare din Arcanele Minore. Fără să te uiți la semnificația „de carte”, construiește-ți propria interpretare combinând: elementul culorii + poziția numerică. De exemplu, „Șase de Cupe” = apă (emoție, relații) + șase (echilibru, la jumătatea seriei 2–9) → o interpretare posibilă: echilibru emoțional regăsit, poate legat de nostalgie sau de o relație veche. Compară apoi cu o sursă de referință.</p>
+      </div>
+    </section>
+
+    <section id="n4" class="panel">
+      <div class="grade-head">
+        <div class="grade-badge">4</div>
+        <div><p class="sub">Nivel avansat</p><h2 class="title">Citire profesională</h2></div>
+      </div>
+      <p class="lede">Ultimul nivel trece de la interpretarea cărților individuale la tehnica completă de citire — structuri de extragere, cărți inversate și practică etică pentru citirea altor persoane.</p>
+      <div class="focus-row">
+        <div class="focus-item"><div class="lbl">Focus</div><div class="val">Spreads, inversări, etică profesională</div></div>
+        <div class="focus-item"><div class="lbl">Cerință</div><div class="val">Niveluri 1–3 parcurse</div></div>
+      </div>
+      <h3>Ce se învață</h3>
+      <p>Structuri de extragere („spreads”) de complexitate crescândă — de la cele trei cărți (trecut/prezent/viitor) la Crucea Celtică (zece cărți, cu poziții dedicate contextului, obstacolelor și rezultatului probabil); interpretarea cărților inversate ca nuanțare, nu ca simplă opoziție a sensului; și practica etică a citirii pentru alte persoane — confidențialitate, formulare responsabilă, evitarea afirmațiilor categorice despre evenimente ireversibile. Nu formula „predicții” despre boală, deces, sarcină sau litigii: îndrumă persoana către medic, psiholog sau jurist, și nu promite rezultate.</p>
+      <div class="exercise">
+        <span class="ex-label">Exercițiu practic — primul spread în trei cărți</span>
+        <ol class="plain">
+          <li>Formulează o întrebare deschisă, non-binară (nu „da/nu”) — de exemplu, „ce ar trebui să știu despre situația X?”</li>
+          <li>Extrage trei cărți, așezate în ordine: Situație – Acțiune – Rezultat probabil.</li>
+          <li>Interpretează fiecare carte în poziția ei, apoi caută o legătură narativă între toate trei.</li>
+          <li>Notează citirea completă în jurnal (vezi secțiunea „Jurnal”) și revino peste câteva săptămâni pentru a vedea cum s-a potrivit cu experiența reală.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="aplicatii" class="panel">
+      <p class="eyebrow">În practică</p>
+      <h2 class="title">Aplicații practice</h2>
+      <div class="card">
+        <h4>Extragerea zilnică</h4>
+        <p>O singură carte trasă dimineața, interpretată ca temă a zilei — exercițiu constant de familiarizare cu semnificațiile, fără presiunea unei întrebări specifice.</p>
+      </div>
+      <div class="card">
+        <h4>Spread-ul în trei cărți</h4>
+        <p>Trecut – Prezent – Viitor, sau, la fel de util, Situație – Acțiune – Rezultat probabil: structura minimă pentru o citire coerentă, potrivită pentru începători.</p>
+      </div>
+      <div class="card">
+        <h4>Jurnalul de tarot</h4>
+        <p>Notarea cărților extrase, a interpretării la momentul extragerii și, ulterior, a modului în care s-a potrivit cu experiența reală — construiește, în timp, o „bibliotecă” personală de semnificații, dincolo de cărțile de referință. Vezi secțiunea „Jurnal” pentru un spațiu dedicat.</p>
+      </div>
+      <h3>Extragere aleatorie</h3>
+      <p>Un pachet virtual de 78 de cărți este amestecat (Fisher–Yates, cu generatorul aleator al browserului) și cărțile se extrag fără repetiție. Aplicația afișează doar numele cărților, cu numerotarea Rider-Waite-Smith (în Marsilia, Dreptatea e VIII și Forța XI); interpretarea o faci tu, cu imaginile pachetului tău. Rezultatul este întâmplător și nu are valoare predictivă.</p>
+      <div class="draw-box">
+        <div class="btn-row">
+          <button type="button" class="btn" id="drawOne">Extrage o carte</button>
+          <button type="button" class="btn btn-ghost" id="drawThree">Extrage 3 cărți</button>
+        </div>
+        <div class="draw-result" id="drawResult" aria-live="polite"></div>
+        <div class="btn-row"><button type="button" class="btn btn-ghost" id="drawToJournal" hidden>Adaugă în jurnal</button></div>
+      </div>
+    </section>
+
+    <section id="comparativ" class="panel">
+      <p class="eyebrow">Anexă comparativă</p>
+      <h2 class="title">Tradiții și pachete</h2>
+      <div class="tablewrap" tabindex="0" role="region" aria-label="Tabel comparativ (derulabil)"><table class="compare">
+        <thead><tr><th>Tradiție</th><th>Origine</th><th>Trăsătură distinctivă</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Tarot de Marseille</strong></td><td>Franța, sec. XVII–XVIII</td><td>Arcanele Minore ilustrate simbolic (numărul simbolurilor), nu narativ; considerat pachetul „clasic”</td></tr>
+          <tr><td><strong>Rider-Waite-Smith</strong></td><td>Anglia, 1909 — Waite &amp; Colman Smith</td><td>Primul pachet larg răspândit cu toate cele 56 de Arcane Minore ilustrate narativ; foarte răspândit în predare (apreciere generală, nu o statistică)</td></tr>
+          <tr><td><strong>Thoth</strong></td><td>Anglia, anii 1940 (publicat 1969) — Crowley &amp; Harris</td><td>Sistem propriu de corespondențe astrologice și kabbalistice, mai complex și mai puțin narativ decât RWS</td></tr>
+          <tr><td><strong>Certificări private</strong></td><td>Organizații și școli contemporane</td><td>Unele emit diplome proprii pe niveluri; nu am verificat existența unui standard sau a unei acreditări oficiale — tratează-le ca atestări private</td></tr>
+          <tr><td><strong>Practică în România</strong></td><td>Cursuri independente contemporane</td><td>Se oferă cursuri independente, uneori împărțite pe Arcane Majore și Minore (neverificat sistematic)</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note">Alegerea unui pachet e mai degrabă o alegere de „limbaj vizual” decât una „corectă” sau „greșită” — un practicant Marsilia și unul Rider-Waite-Smith pot ajunge la interpretări apropiate pornind de la simboluri diferite.</div>
+    </section>
+
+    <section id="glosar" class="panel">
+      <p class="eyebrow">Referință</p>
+      <h2 class="title">Glosar</h2>
+      <dl class="glossary">
+        <div><dt>Arcane Majore</dt><dd>Cele 22 de cărți numerotate de la 0 (Nebunul) la XXI (Lumea), citite ca o secvență narativă unitară.</dd></div>
+        <div><dt>Arcane Minore</dt><dd>Cele 56 de cărți rămase, împărțite în patru culori a câte 14 cărți.</dd></div>
+        <div><dt>Spread</dt><dd>Structură fixă de extragere și așezare a cărților, cu poziții dedicate unor aspecte diferite ale întrebării.</dd></div>
+        <div><dt>Crucea Celtică</dt><dd>Unul dintre cele mai folosite spread-uri complexe, cu zece poziții dedicate contextului, obstacolelor și rezultatului probabil.</dd></div>
+        <div><dt>Carte inversată</dt><dd>Carte extrasă cu capul în jos față de practician, interpretată de regulă ca nuanțare sau blocaj al sensului drept.</dd></div>
+        <div><dt>Călătoria Nebunului</dt><dd>Citirea celor 22 de Arcane Majore ca parcurs arhetipal unitar de dezvoltare personală.</dd></div>
+        <div><dt>Cărți de curte</dt><dd>Valet, Cavaler, Regină și Rege — cele patru cărți „umane” din fiecare culoare a Arcanelor Minore.</dd></div>
+        <div><dt>Rider-Waite-Smith (RWS)</dt><dd>Pachetul publicat în 1909, foarte influent și des folosit în predarea modernă a tarotului.</dd></div>
+        <div><dt>Tarot de Marseille</dt><dd>Tradiția franceză mai veche, cu Arcanele Minore ilustrate simbolic, nu narativ.</dd></div>
+        <div><dt>Etteilla</dt><dd>Pseudonimul lui Jean-Baptiste Alliette, autorul unor dintre primele ghiduri dedicate explicit citirii divinatorii a tarotului.</dd></div>
+      </dl>
+    </section>
+
+    <section id="jurnal" class="panel">
+      <p class="eyebrow">Notițe personale</p>
+      <h2 class="title">Jurnal de tarot</h2>
+      <p>Notează cărțile extrase, interpretarea de la momentul extragerii și, mai târziu, cum s-a potrivit cu experiența reală. Notițele există doar în această sesiune a browserului: descarcă-le înainte de a închide pagina, altfel se pierd la reîncărcare — aplicația nu folosește stocare persistentă.</p>
+      <textarea id="journalText" class="journal-area" rows="14" aria-label="Jurnal" placeholder="Ex: Extragere zilnică — Steaua. Temă: speranță după o perioadă dificilă…"></textarea>
+      <div class="journal-btns">
+        <button type="button" class="btn" id="journalDownload">Descarcă (.txt)</button>
+        <button type="button" class="btn btn-ghost" id="journalClear">Golește</button>
+      </div>
+    </section>
+
+    <section id="quiz" class="panel">
+      <p class="eyebrow">Verifică-ți cunoștințele</p>
+      <h2 class="title">Autoevaluare</h2>
+      <p>Zece întrebări despre istoricul, structura și tradițiile tarotului.</p>
+      <div id="quizRoot"></div>
+      <div id="quizScore" role="status" aria-live="polite"></div>
+      <button type="button" class="btn" id="quizReset">Reia testul</button>
+    </section>
+
+    <footer class="appfoot"><p><strong>Tradiție și divertisment, nu știință.</strong> Tarotul nu are validare științifică ca metodă de predicție sau tratament; nu înlocuiește sfatul medical, psihologic, juridic sau financiar.</p><p>Aplicație offline, fără cont, fără telemetrie și fără dependențe externe · parte din portofoliul de aplicații single-file HTML</p></footer>
+  </main>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  function $(id){ return document.getElementById(id); }
+  var links = Array.prototype.slice.call(document.querySelectorAll(".navlist a"));
+  var panels = Array.prototype.slice.call(document.querySelectorAll(".panel"));
+  var sidebar = $("sidebar"), toggle = $("navToggle"), liveStatus = $("liveStatus");
+  var reduceMotion = false;
+  try { reduceMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches); } catch(e){}
+
+  function say(msg){
+    liveStatus.textContent = "";
+    setTimeout(function(){ liveStatus.textContent = msg; }, 40);
+  }
+  function randInt(n){
+    var c = window.crypto || window.msCrypto;
+    if(c && c.getRandomValues){
+      var a = new Uint32Array(1), lim = Math.floor(4294967296 / n) * n;
+      do { c.getRandomValues(a); } while(a[0] >= lim);
+      return a[0] % n;
+    }
+    return Math.floor(Math.random() * n);
+  }
+  function shuffle(arr){
+    for(var i = arr.length - 1; i > 0; i--){
+      var j = randInt(i + 1), t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  /* ---- navigare + deep link (#id) ---- */
+  function validId(id){ return panels.some(function(p){ return p.id === id; }); }
+  function closeNav(){
+    sidebar.classList.remove("open");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Deschide meniul");
+  }
+  function activate(target, opts){
+    opts = opts || {};
+    if(!validId(target)) target = "intro";
+    panels.forEach(function(p){ p.classList.toggle("active", p.id === target); });
+    links.forEach(function(l){
+      var on = l.getAttribute("data-target") === target;
+      l.classList.toggle("active", on);
+      if(on) l.setAttribute("aria-current", "page"); else l.removeAttribute("aria-current");
+    });
+    closeNav();
+    window.scrollTo(0, 0);
+    var h = document.querySelector("#" + target + " h2.title");
+    if(opts.focus && h){ h.setAttribute("tabindex", "-1"); h.focus({preventScroll:true}); }
+    if(opts.push && location.hash !== "#" + target){
+      try { history.pushState(null, "", "#" + target); } catch(e){ try { location.hash = target; } catch(e2){} }
+    }
+  }
+  function fromHash(){
+    var id = "";
+    try { id = decodeURIComponent(location.hash.replace(/^#/, "")); } catch(e){}
+    activate(validId(id) ? id : "intro", {focus:false});
+  }
+  links.forEach(function(l){
+    l.addEventListener("click", function(e){
+      e.preventDefault();
+      activate(l.getAttribute("data-target"), {push:true, focus:true});
+    });
+  });
+  window.addEventListener("hashchange", fromHash);
+  window.addEventListener("popstate", fromHash);
+
+  toggle.addEventListener("click", function(){
+    var open = sidebar.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    toggle.setAttribute("aria-label", open ? "Închide meniul" : "Deschide meniul");
+    if(open){ var a = sidebar.querySelector("a.active") || sidebar.querySelector("a"); if(a) a.focus(); }
+  });
+  document.addEventListener("click", function(e){
+    if(sidebar.classList.contains("open") && !sidebar.contains(e.target) && e.target !== toggle) closeNav();
+  });
+
+  /* ---- căutare (fără diacritice) ---- */
+  function normalize(s){ return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
+  var searchInput = $("searchInput"), searchResults = $("searchResults");
+  function closeSearch(){ searchResults.classList.remove("show"); }
+  function pick(id){
+    activate(id, {push:true, focus:true});
+    searchInput.value = "";
+    closeSearch();
+  }
+  function runSearch(){
+    var q = normalize(searchInput.value.trim());
+    searchResults.textContent = "";
+    if(q.length < 2){ closeSearch(); return; }
+    var matches = [];
+    panels.forEach(function(p){
+      if(normalize(p.textContent).indexOf(q) !== -1){
+        var t = p.querySelector("h2.title");
+        matches.push({id:p.id, title: t ? t.textContent : p.id});
+      }
+    });
+    if(!matches.length){
+      var empty = document.createElement("div");
+      empty.className = "sr-empty";
+      empty.textContent = "Niciun rezultat";
+      searchResults.appendChild(empty);
+    } else {
+      matches.slice(0, 8).forEach(function(m){
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "sr-item";
+        b.textContent = m.title;
+        b.addEventListener("click", function(){ pick(m.id); });
+        b.addEventListener("keydown", function(e){
+          if(e.key === "ArrowDown" && b.nextElementSibling){ e.preventDefault(); b.nextElementSibling.focus(); }
+          else if(e.key === "ArrowUp"){ e.preventDefault(); (b.previousElementSibling || searchInput).focus(); }
+          else if(e.key === "Escape"){ closeSearch(); searchInput.focus(); }
+        });
+        searchResults.appendChild(b);
+      });
+    }
+    searchResults.classList.add("show");
+  }
+  searchInput.addEventListener("input", runSearch);
+  searchInput.addEventListener("keydown", function(e){
+    if(e.key === "Escape"){ closeSearch(); }
+    else if(e.key === "ArrowDown"){ var f = searchResults.querySelector(".sr-item"); if(f){ e.preventDefault(); f.focus(); } }
+    else if(e.key === "Enter"){ var g = searchResults.querySelector(".sr-item"); if(g){ e.preventDefault(); g.click(); } }
+  });
+  document.addEventListener("click", function(e){
+    if(e.target !== searchInput && !searchResults.contains(e.target)) closeSearch();
+  });
+
+  /* ---- unelte: tipărire, distribuire, ecran complet, wake lock ---- */
+  $("btnPrint").addEventListener("click", function(){ window.print(); });
+
+  var btnShare = $("btnShare");
+  var metaDesc = document.querySelector('meta[name="description"]');
+  function flashShare(ok){
+    var old = btnShare.textContent;
+    btnShare.textContent = ok ? "✓" : "!";
+    setTimeout(function(){ btnShare.textContent = old; }, 1400);
+    say(ok ? "Linkul a fost copiat." : "Nu s-a putut copia linkul.");
+  }
+  function copyShare(){
+    var text = document.title + " — " + location.href;
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ flashShare(true); }, function(){ flashShare(false); });
+    } else {
+      try { window.prompt("Copiază linkul:", text); } catch(e){ flashShare(false); }
+    }
+  }
+  btnShare.addEventListener("click", function(){
+    var data = {title: document.title, text: metaDesc ? metaDesc.content : document.title, url: location.href};
+    if(navigator.share){
+      navigator.share(data).catch(function(err){ if(!err || err.name !== "AbortError") copyShare(); });
+    } else { copyShare(); }
+  });
+
+  var btnFs = $("btnFullscreen");
+  function syncFs(){
+    var on = !!(document.fullscreenElement);
+    btnFs.classList.toggle("active", on);
+    btnFs.setAttribute("aria-pressed", on ? "true" : "false");
+  }
+  if(!document.documentElement.requestFullscreen){
+    btnFs.disabled = true;
+    btnFs.title = "Ecran complet indisponibil în acest browser";
+  } else {
+    btnFs.addEventListener("click", function(){
+      if(!document.fullscreenElement){
+        document.documentElement.requestFullscreen().catch(function(){ say("Ecranul complet a fost refuzat de browser."); });
+      } else if(document.exitFullscreen){ document.exitFullscreen(); }
+    });
+    document.addEventListener("fullscreenchange", syncFs);
+  }
+
+  var btnWake = $("btnWakeLock"), wakeLock = null, wakeWanted = false;
+  function syncWake(){
+    btnWake.classList.toggle("active", wakeWanted);
+    btnWake.setAttribute("aria-pressed", wakeWanted ? "true" : "false");
+  }
+  function acquireWake(){
+    return navigator.wakeLock.request("screen").then(function(lock){
+      wakeLock = lock;
+      lock.addEventListener("release", function(){ if(wakeLock === lock) wakeLock = null; });
+    }).catch(function(){
+      wakeWanted = false; wakeLock = null; syncWake();
+      say("Nu s-a putut păstra ecranul activ.");
+    });
+  }
+  if(!("wakeLock" in navigator)){
+    btnWake.disabled = true;
+    btnWake.title = "Indisponibil în acest browser";
+  } else {
+    btnWake.addEventListener("click", function(){
+      if(wakeWanted){
+        wakeWanted = false;
+        if(wakeLock){ wakeLock.release().catch(function(){}); wakeLock = null; }
+        syncWake();
+      } else {
+        wakeWanted = true; syncWake(); acquireWake();
+      }
+    });
+    document.addEventListener("visibilitychange", function(){
+      if(document.visibilityState === "visible" && wakeWanted && !wakeLock) acquireWake();
+    });
+  }
+
+  /* ---- jurnal (doar în sesiune; descărcare ca .txt) ---- */
+  var journalText = $("journalText"), dirty = false;
+  journalText.addEventListener("input", function(){ dirty = journalText.value.length > 0; });
+  $("journalDownload").addEventListener("click", function(){
+    if(!journalText.value.trim()){ say("Jurnalul este gol."); return; }
+    try {
+      var blob = new Blob([journalText.value], {type:"text/plain;charset=utf-8"});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "jurnal-tarot.txt";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
+      dirty = false;
+      say("Jurnalul a fost descărcat.");
+    } catch(e){ say("Descărcarea nu a reușit."); }
+  });
+  $("journalClear").addEventListener("click", function(){
+    if(!journalText.value) return;
+    if(confirm("Golești tot jurnalul? Această acțiune nu poate fi anulată.")){
+      journalText.value = ""; dirty = false;
+    }
+  });
+  window.addEventListener("beforeunload", function(e){
+    if(dirty){ e.preventDefault(); e.returnValue = ""; }
+  });
+
+  /* ---- animații SMIL: oprite la prefers-reduced-motion ---- */
+  if(reduceMotion){
+    Array.prototype.slice.call(document.querySelectorAll("svg animate")).forEach(function(an){
+      var p = an.parentNode;
+      if(p && p.getAttribute("opacity") === "0") p.setAttribute("opacity", "1");
+      p.removeChild(an);
+    });
+  }
+
+  /* ---- autoevaluare ---- */
+  var QUESTIONS = [
+    {q:"Câte cărți are un pachet standard de tarot?", opts:["52","72","78","100"], correct:2, fixed:true, explain:"78 de cărți: 22 Arcane Majore și 56 Arcane Minore."},
+    {q:"Unde apar cele mai vechi pachete de tarot documentate?", opts:["Franța, sec. XVIII","Anglia, sec. XIX","Italia, sec. XV","Egipt, antichitate"], correct:2, explain:"Pachete precum Visconti-Sforza provin din Italia renascentistă, sec. XV, ca joc de cărți."},
+    {q:"Cine a propus, în 1781, o origine egipteană a tarotului?", opts:["Antoine Court de Gébelin","Arthur Edward Waite","Aleister Crowley","Etteilla"], correct:0, explain:"Court de Gébelin a propus această ipoteză, azi respinsă de istorici, dar influentă în transformarea tarotului în instrument ezoteric."},
+    {q:"Cine a ilustrat pachetul Rider-Waite-Smith (1909)?", opts:["Frieda Harris","Pamela Colman Smith","Antoine Court de Gébelin","Un tipograf anonim din Marsilia"], correct:1, explain:"Pamela Colman Smith a realizat ilustrațiile, după conceptul lui Arthur Edward Waite."},
+    {q:"Câte cărți formează Arcanele Majore?", opts:["14","22","40","56"], correct:1, fixed:true, explain:"22 de cărți, de la 0 (Nebunul) la XXI (Lumea)."},
+    {q:"Ce element este asociat culorii Cupe (în sistemul clasic folosit în curs)?", opts:["Foc","Apă","Aer","Pământ"], correct:1, explain:"Cupele sunt asociate elementului Apă — emoție și relații."},
+    {q:"Cine a conceput pachetul Thoth, alături de Frieda Harris?", opts:["Arthur Edward Waite","Aleister Crowley","Jean-Baptiste Alliette","Court de Gébelin"], correct:1, explain:"Aleister Crowley a conceput Thoth alături de pictorița Frieda Harris; pachetul a fost publicat în 1969."},
+    {q:"Cum se numește citirea celor 22 de Arcane Majore ca parcurs unitar?", opts:["Crucea Celtică","Călătoria Nebunului","Spread-ul în trei cărți","Anul Personal"], correct:1, explain:"„Călătoria Nebunului” citește Arcanele Majore ca o secvență arhetipală de dezvoltare personală."},
+    {q:"Câte poziții are, de regulă, spread-ul „Crucea Celtică”?", opts:["Trei","Cinci","Zece","Douăzeci și doi"], correct:2, fixed:true, explain:"Crucea Celtică folosește de regulă zece poziții, dedicate contextului, obstacolelor și rezultatului probabil."},
+    {q:"Ce tradiție ilustrează Arcanele Minore doar simbolic, nu narativ?", opts:["Rider-Waite-Smith","Thoth","Tarot de Marseille","Un pachet modern de joc cu 52 de cărți"], correct:2, explain:"Tarot de Marseille păstrează Arcanele Minore ilustrate prin numărul de simboluri, nu prin scene narative."}
+  ];
+  var root = $("quizRoot"), scoreBox = $("quizScore"), answered = {};
+  function renderQuiz(){
+    answered = {};
+    scoreBox.classList.remove("show");
+    scoreBox.textContent = "";
+    root.textContent = "";
+    QUESTIONS.forEach(function(item, qi){
+      var qDiv = document.createElement("div");
+      qDiv.className = "q";
+      qDiv.setAttribute("role", "group");
+      qDiv.setAttribute("aria-labelledby", "qt" + qi);
+      var qp = document.createElement("p");
+      qp.className = "qtext";
+      qp.id = "qt" + qi;
+      qp.textContent = (qi + 1) + ". " + item.q;
+      qDiv.appendChild(qp);
+      var optsDiv = document.createElement("div");
+      optsDiv.className = "opts";
+      var order = item.opts.map(function(_, i){ return i; });
+      if(!item.fixed) shuffle(order);
+      order.forEach(function(oi){
+        var label = document.createElement("label");
+        label.setAttribute("data-oi", oi);
+        var input = document.createElement("input");
+        input.type = "radio";
+        input.name = "q" + qi;
+        input.value = oi;
+        label.appendChild(input);
+        var span = document.createElement("span");
+        span.textContent = item.opts[oi];
+        label.appendChild(span);
+        input.addEventListener("change", function(){ handleAnswer(qi, oi, qDiv); });
+        optsDiv.appendChild(label);
+      });
+      qDiv.appendChild(optsDiv);
+      var ex = document.createElement("p");
+      ex.className = "qz-explain";
+      ex.setAttribute("role", "status");
+      qDiv.appendChild(ex);
+      root.appendChild(qDiv);
+    });
+  }
+  function handleAnswer(qi, oi, qDiv){
+    if(answered[qi] !== undefined) return;
+    answered[qi] = oi;
+    var isCorrect = (oi === QUESTIONS[qi].correct);
+    try { if(navigator.vibrate && !reduceMotion){ navigator.vibrate(isCorrect ? 30 : [20,40,20]); } } catch(e){}
+    qDiv.querySelectorAll("label").forEach(function(l){
+      var v = +l.getAttribute("data-oi");
+      l.querySelector("input").disabled = true;
+      if(v === QUESTIONS[qi].correct) l.classList.add("correct");
+      else if(v === oi) l.classList.add("wrong");
+    });
+    var ex = qDiv.querySelector(".qz-explain");
+    ex.textContent = (isCorrect ? "Corect. " : "Greșit. ") + QUESTIONS[qi].explain;
+    ex.classList.add("show");
+    if(Object.keys(answered).length === QUESTIONS.length) showScore();
+  }
+  function showScore(){
+    var correct = 0;
+    Object.keys(answered).forEach(function(qi){ if(answered[qi] === QUESTIONS[qi].correct) correct++; });
+    scoreBox.textContent = "Scor: " + correct + " din " + QUESTIONS.length + " răspunsuri corecte.";
+    scoreBox.classList.add("show");
+  }
+  $("quizReset").addEventListener("click", function(){ renderQuiz(); window.scrollTo(0, 0); });
+  renderQuiz();
+
+
+  /* ---- extragere aleatorie (Fisher–Yates + crypto.getRandomValues) ---- */
+  var MAJORS = ["Nebunul","Magicianul","Preoteasa","Împărăteasa","Împăratul","Ierofantul","Îndrăgostiții","Carul","Forța","Pustnicul","Roata Norocului","Dreptatea","Spânzuratul","Moartea","Cumpătarea","Diavolul","Turnul","Steaua","Luna","Soarele","Judecata","Lumea"];
+  var ROMAN = ["0","I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX","XXI"];
+  var RANKS = ["As","Doi","Trei","Patru","Cinci","Șase","Șapte","Opt","Nouă","Zece","Valet","Cavaler","Regină","Rege"];
+  var SUITS = ["Bastoane","Cupe","Săbii","Pentacluri"];
+  var DECK = [];
+  MAJORS.forEach(function(n, i){ DECK.push(ROMAN[i] + " · " + n); });
+  SUITS.forEach(function(su){ RANKS.forEach(function(r){ DECK.push(r + " de " + su); }); });
+  var drawResult = $("drawResult"), drawToJournal = $("drawToJournal"), lastDraw = null;
+  var POSITIONS = ["Situație","Acțiune","Rezultat probabil"];
+  function draw(n){
+    var cards = shuffle(DECK.slice()).slice(0, n);
+    lastDraw = cards;
+    drawResult.textContent = "";
+    var ol = document.createElement("ol");
+    cards.forEach(function(c, i){
+      var li = document.createElement("li");
+      if(n === 3){ li.appendChild(document.createTextNode(POSITIONS[i] + ": ")); }
+      var sp = document.createElement("span");
+      sp.className = "cname";
+      sp.textContent = c;
+      li.appendChild(sp);
+      ol.appendChild(li);
+    });
+    drawResult.appendChild(ol);
+    var p = document.createElement("p");
+    p.textContent = "Privește imaginea din pachetul tău și notează întâi ce îți sugerează ea, apoi compară cu o sursă de referință.";
+    drawResult.appendChild(p);
+    drawToJournal.hidden = false;
+  }
+  $("drawOne").addEventListener("click", function(){ draw(1); });
+  $("drawThree").addEventListener("click", function(){ draw(3); });
+  drawToJournal.addEventListener("click", function(){
+    if(!lastDraw) return;
+    var d = new Date(), pad = function(x){ return (x < 10 ? "0" : "") + x; };
+    var stamp = d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+    var line = stamp + " — extragere (" + lastDraw.length + (lastDraw.length === 1 ? " carte" : " cărți") + "): " + lastDraw.join("; ") + "\n";
+    journalText.value += (journalText.value && !/\n$/.test(journalText.value) ? "\n" : "") + line;
+    dirty = true;
+    say("Adăugat în jurnal.");
+  });
+
+
+  fromHash();
+})();
+</script>
+</body>
+</html>
