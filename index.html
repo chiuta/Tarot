@@ -2,7 +2,7 @@
 <html lang="ro">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-U5HYNakAAcMUYIMnyjGKjA3hswFlXK7cLN4A+wLPGeU='; style-src 'unsafe-inline'; img-src data: blob:; font-src 'none'; connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Ob28Ms3uyH//ItGxK7m5HXr/V9dBQJOzZPSbMXiNjqo='; style-src 'unsafe-inline'; img-src data: blob:; font-src 'none'; connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#2A0F1C">
@@ -80,6 +80,9 @@
   .sr-item:last-child{border-bottom:none}
   .sr-item:hover{background:var(--wine-soft)}
   .sr-empty{padding:10px 12px;font-size:.85rem;color:var(--ink-soft)}
+  .sr-snip{display:block;margin-top:3px;font-size:.78rem;line-height:1.35;color:var(--ink-soft);font-weight:400}
+  .sr-snip mark,mark.sr-hit{background:#F3D98B;color:var(--ink);border-radius:2px;padding:0 1px}
+  @media print{mark.sr-hit{background:none}}
   .tool-btns{display:flex;gap:6px}
   .tool-btns button{
     width:38px;height:38px;border-radius:var(--radius-s);border:1px solid var(--line);
@@ -660,20 +663,54 @@
   function normalize(s){ return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
   var searchInput = $("searchInput"), searchResults = $("searchResults");
   function closeSearch(){ searchResults.classList.remove("show"); }
-  function pick(id){
+  function clearHits(){
+    document.querySelectorAll("mark.sr-hit").forEach(function(m){
+      var par = m.parentNode; if(!par) return;
+      while(m.firstChild) par.insertBefore(m.firstChild, m);
+      par.removeChild(m); par.normalize();
+    });
+  }
+  /* după alegerea unui rezultat: evidențiază prima apariție în secțiune și derulează la ea */
+  function highlightHit(id, q){
+    clearHits();
+    var root = document.getElementById(id); if(!root || !q) return;
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null), n;
+    while((n = w.nextNode())){
+      var v = n.nodeValue, nv = normalize(v);
+      if(nv.length !== v.length) continue;
+      var i = nv.indexOf(q);
+      if(i === -1) continue;
+      var par = n.parentNode;
+      if(par && par.closest && par.closest("script,style,button,[hidden]")) continue;
+      var r = document.createRange(); r.setStart(n, i); r.setEnd(n, i + q.length);
+      var m = document.createElement("mark"); m.className = "sr-hit";
+      try { r.surroundContents(m); } catch(e){ return; }
+      var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      try { m.scrollIntoView({block:"center", behavior: reduce ? "auto" : "smooth"}); } catch(e){ m.scrollIntoView(); }
+      return;
+    }
+  }
+  function pick(id, q){
     activate(id, {push:true, focus:true});
     searchInput.value = "";
     closeSearch();
+    highlightHit(id, q);
   }
   function runSearch(){
     var q = normalize(searchInput.value.trim());
+    clearHits();
     searchResults.textContent = "";
     if(q.length < 2){ closeSearch(); return; }
     var matches = [];
     panels.forEach(function(p){
-      if(normalize(p.textContent).indexOf(q) !== -1){
-        var t = p.querySelector("h2.title");
-        matches.push({id:p.id, title: t ? t.textContent : p.id});
+      var raw = p.textContent, nraw = normalize(raw), at = nraw.indexOf(q);
+      if(at !== -1){
+        var t = p.querySelector("h2.title"), snip = null;
+        if(nraw.length === raw.length){
+          var a0 = Math.max(0, at - 50), b0 = Math.min(raw.length, at + q.length + 70);
+          snip = {pre:(a0 > 0 ? "… " : "") + raw.slice(a0, at).replace(/\s+/g, " "), hit:raw.slice(at, at + q.length), post:raw.slice(at + q.length, b0).replace(/\s+/g, " ") + (b0 < raw.length ? " …" : "")};
+        }
+        matches.push({id:p.id, title: t ? t.textContent : p.id, snip:snip});
       }
     });
     if(!matches.length){
@@ -686,8 +723,15 @@
         var b = document.createElement("button");
         b.type = "button";
         b.className = "sr-item";
-        b.textContent = m.title;
-        b.addEventListener("click", function(){ pick(m.id); });
+        var tt = document.createElement("strong"); tt.textContent = m.title; b.appendChild(tt);
+        if(m.snip){
+          var sp = document.createElement("span"); sp.className = "sr-snip";
+          sp.appendChild(document.createTextNode(m.snip.pre));
+          var hm = document.createElement("mark"); hm.textContent = m.snip.hit; sp.appendChild(hm);
+          sp.appendChild(document.createTextNode(m.snip.post));
+          b.appendChild(sp);
+        }
+        b.addEventListener("click", function(){ pick(m.id, q); });
         b.addEventListener("keydown", function(e){
           if(e.key === "ArrowDown" && b.nextElementSibling){ e.preventDefault(); b.nextElementSibling.focus(); }
           else if(e.key === "ArrowUp"){ e.preventDefault(); (b.previousElementSibling || searchInput).focus(); }

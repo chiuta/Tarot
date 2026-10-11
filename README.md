@@ -17,7 +17,7 @@ Secțiuni (meniul din stânga, ☰ pe mobil): Introducere, Istoric, Structura pa
 Verificate în cod și în browser:
 - Extragere aleatorie de 1 sau 3 cărți dintr-un pachet virtual de 78 (amestecare Fisher–Yates cu `crypto.getRandomValues`, fără repetiții); se afișează doar numele cărților; rezultatul se poate adăuga în jurnal.
 - Alegerea pachetului pentru extragere (complet 78 / doar Arcanele Majore 22 / doar Arcanele Minore 56); fiecare carte extrasă arată și apartenența structurală („Arcană Majoră” / „Arcană Minoră”), fără interpretări.
-- Căutare în curs, fără sensibilitate la diacritice.
+- Căutare în curs, fără sensibilitate la diacritice; fiecare rezultat arată un fragment de text cu termenul evidențiat, iar la alegere pagina derulează la locul respectiv și îl marchează.
 - Link direct la o secțiune (`#istoric`, `#quiz` etc.), butoanele Înapoi/Înainte ale browserului funcționează.
 - Jurnal descărcabil ca `.txt` și „Încarcă (.txt)” (adaugă textul unui fișier ales, până la 1 MB, la jurnalul curent; nu se salvează nimic în browser); test de 10 întrebări cu ordinea răspunsurilor amestecată.
 - Printare (doar secțiunea curentă), distribuire/copiere link, ecran complet, păstrare ecran activ (unde browserul le acceptă).
@@ -47,6 +47,7 @@ Verificate în cod și în browser:
 
 Ultima actualizare: 11 octombrie 2026.
 
+- Căutarea afișează acum fragmentul în care apare termenul (înainte, interogări precum „Turnul” arătau doar titlul secțiunii) și evidențiază potrivirea în text la selectare.
 - Adăugat: alegerea pachetului la extragere, eticheta Arcană Majoră/Minoră, „Încarcă (.txt)” în jurnal; CSP: `script-src` pe hash SHA-256, fără `'unsafe-inline'`; titlurile cardurilor din „Structura pachetului” și „Aplicații practice” sunt acum h3 (ordine corectă a titlurilor în aceste două secțiuni; axe-core: 0 violări pe toate cele 12 secțiuni, 1280 px).
 - Pagina are acum un titlu de nivel 1 în zona principală, vizibil cititoarelor de ecran și pe mobil (meniul lateral este ascuns acolo); aspectul vizibil nu s-a schimbat. axe-core: 0 violări la 1280 și 360 px.
 - Conținutul rămâne fără imagini ale cărților și fără interpretări per carte (alegere de conținut a autorului, neschimbată).
