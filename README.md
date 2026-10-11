@@ -16,9 +16,10 @@ Secțiuni (meniul din stânga, ☰ pe mobil): Introducere, Istoric, Structura pa
 
 Verificate în cod și în browser:
 - Extragere aleatorie de 1 sau 3 cărți dintr-un pachet virtual de 78 (amestecare Fisher–Yates cu `crypto.getRandomValues`, fără repetiții); se afișează doar numele cărților; rezultatul se poate adăuga în jurnal.
+- Alegerea pachetului pentru extragere (complet 78 / doar Arcanele Majore 22 / doar Arcanele Minore 56); fiecare carte extrasă arată și apartenența structurală („Arcană Majoră” / „Arcană Minoră”), fără interpretări.
 - Căutare în curs, fără sensibilitate la diacritice.
 - Link direct la o secțiune (`#istoric`, `#quiz` etc.), butoanele Înapoi/Înainte ale browserului funcționează.
-- Jurnal descărcabil ca `.txt`; test de 10 întrebări cu ordinea răspunsurilor amestecată.
+- Jurnal descărcabil ca `.txt` și „Încarcă (.txt)” (adaugă textul unui fișier ales, până la 1 MB, la jurnalul curent; nu se salvează nimic în browser); test de 10 întrebări cu ordinea răspunsurilor amestecată.
 - Printare (doar secțiunea curentă), distribuire/copiere link, ecran complet, păstrare ecran activ (unde browserul le acceptă).
 
 ## Manual de utilizare
@@ -46,6 +47,7 @@ Verificate în cod și în browser:
 
 Ultima actualizare: 11 octombrie 2026.
 
+- Adăugat: alegerea pachetului la extragere, eticheta Arcană Majoră/Minoră, „Încarcă (.txt)” în jurnal; CSP: `script-src` pe hash SHA-256, fără `'unsafe-inline'`; titlurile cardurilor din „Structura pachetului” și „Aplicații practice” sunt acum h3 (ordine corectă a titlurilor în aceste două secțiuni; axe-core: 0 violări pe toate cele 12 secțiuni, 1280 px).
 - Pagina are acum un titlu de nivel 1 în zona principală, vizibil cititoarelor de ecran și pe mobil (meniul lateral este ascuns acolo); aspectul vizibil nu s-a schimbat. axe-core: 0 violări la 1280 și 360 px.
 - Conținutul rămâne fără imagini ale cărților și fără interpretări per carte (alegere de conținut a autorului, neschimbată).
 

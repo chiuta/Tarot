@@ -2,7 +2,7 @@
 <html lang="ro">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; font-src 'none'; connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-U5HYNakAAcMUYIMnyjGKjA3hswFlXK7cLN4A+wLPGeU='; style-src 'unsafe-inline'; img-src data: blob:; font-src 'none'; connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#2A0F1C">
@@ -107,6 +107,7 @@
 
   .card{background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius-m);padding:20px 22px;margin:0 0 16px}
   .card h4{margin:0 0 8px;font-family:var(--serif);font-size:1.08rem;color:var(--ink)}
+  .card h3.card-h{margin:0 0 8px;font-size:1.08rem}
   .card p{margin:0;font-size:.95rem}
 
   .exercise{background:#FBF0DD;border:1px solid var(--gold);border-radius:var(--radius-m);padding:18px 20px;margin:22px 0}
@@ -251,6 +252,10 @@
   .draw-result ol{margin:0;padding-left:22px}
   .draw-result li{margin-bottom:6px;font-size:1.02rem}
   .draw-result .cname{font-family:var(--serif);font-weight:700}
+  .draw-result .ckind{display:block;font-size:.8rem;color:var(--ink-soft);font-weight:400}
+  .draw-deck{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 10px;font-size:.92rem;color:var(--ink-soft)}
+  .draw-deck select{padding:7px 10px;border:1px solid var(--line);border-radius:var(--radius-s);background:var(--bg-panel);color:var(--ink);font:inherit}
+  .draw-deck select:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -366,11 +371,11 @@
       <h2 class="title">Structura pachetului</h2>
       <p>Un pachet standard de tarot are 78 de cărți, împărțite în două categorii cu funcții narative diferite.</p>
       <div class="card">
-        <h4>22 de Arcane Majore</h4>
+        <h3 class="card-h">22 de Arcane Majore</h3>
         <p>De la <strong>0 — Nebunul</strong> la <strong>XXI — Lumea</strong>, formează o secvență adesea citită ca o călătorie simbolică unică — „Călătoria Nebunului” — care parcurge etape arhetipale de dezvoltare personală: inocență, provocare, criză, transformare, integrare.</p>
       </div>
       <div class="card">
-        <h4>56 de Arcane Minore</h4>
+        <h3 class="card-h">56 de Arcane Minore</h3>
         <p>Patru culori a câte 14 cărți fiecare: Ași până la 10, plus patru cărți de curte (Valet, Cavaler, Regină, Rege) — structură paralelă cărților de joc obișnuite, din care tarotul descinde istoric.</p>
       </div>
       <h3>Cele patru culori și elementele lor</h3>
@@ -490,20 +495,22 @@
       <p class="eyebrow">În practică</p>
       <h2 class="title">Aplicații practice</h2>
       <div class="card">
-        <h4>Extragerea zilnică</h4>
+        <h3 class="card-h">Extragerea zilnică</h3>
         <p>O singură carte trasă dimineața, interpretată ca temă a zilei — exercițiu constant de familiarizare cu semnificațiile, fără presiunea unei întrebări specifice.</p>
       </div>
       <div class="card">
-        <h4>Spread-ul în trei cărți</h4>
+        <h3 class="card-h">Spread-ul în trei cărți</h3>
         <p>Trecut – Prezent – Viitor, sau, la fel de util, Situație – Acțiune – Rezultat probabil: structura minimă pentru o citire coerentă, potrivită pentru începători.</p>
       </div>
       <div class="card">
-        <h4>Jurnalul de tarot</h4>
+        <h3 class="card-h">Jurnalul de tarot</h3>
         <p>Notarea cărților extrase, a interpretării la momentul extragerii și, ulterior, a modului în care s-a potrivit cu experiența reală — construiește, în timp, o „bibliotecă” personală de semnificații, dincolo de cărțile de referință. Vezi secțiunea „Jurnal” pentru un spațiu dedicat.</p>
       </div>
       <h3>Extragere aleatorie</h3>
       <p>Un pachet virtual de 78 de cărți este amestecat (Fisher–Yates, cu generatorul aleator al browserului) și cărțile se extrag fără repetiție. Aplicația afișează doar numele cărților, cu numerotarea Rider-Waite-Smith (în Marsilia, Dreptatea e VIII și Forța XI); interpretarea o faci tu, cu imaginile pachetului tău. Rezultatul este întâmplător și nu are valoare predictivă.</p>
       <div class="draw-box">
+        <div class="draw-deck"><label for="drawDeck">Pachet pentru extragere:</label>
+          <select id="drawDeck"><option value="all">Complet (78 de cărți)</option><option value="major">Doar Arcanele Majore (22)</option><option value="minor">Doar Arcanele Minore (56)</option></select></div>
         <div class="btn-row">
           <button type="button" class="btn" id="drawOne">Extrage o carte</button>
           <button type="button" class="btn btn-ghost" id="drawThree">Extrage 3 cărți</button>
@@ -553,6 +560,7 @@
       <textarea id="journalText" class="journal-area" rows="14" aria-label="Jurnal" placeholder="Ex: Extragere zilnică — Steaua. Temă: speranță după o perioadă dificilă…"></textarea>
       <div class="journal-btns">
         <button type="button" class="btn" id="journalDownload">Descarcă (.txt)</button>
+        <button type="button" class="btn btn-ghost" id="journalLoad">Încarcă (.txt)</button>
         <button type="button" class="btn btn-ghost" id="journalClear">Golește</button>
       </div>
     </section>
@@ -795,6 +803,27 @@
       say("Jurnalul a fost descărcat.");
     } catch(e){ say("Descărcarea nu a reușit."); }
   });
+  $("journalLoad").addEventListener("click", function(){
+    var inp = document.createElement("input");
+    inp.type = "file"; inp.accept = ".txt,text/plain";
+    inp.addEventListener("change", function(){
+      var f = inp.files && inp.files[0];
+      if(!f) return;
+      if(f.size > 1048576){ say("Fișierul este prea mare (maximum 1 MB)."); return; }
+      var r = new FileReader();
+      r.onerror = function(){ say("Fișierul nu a putut fi citit."); };
+      r.onload = function(){
+        var txt = String(r.result || "");
+        if(txt.indexOf("\u0000") !== -1){ say("Fișierul nu pare a fi text simplu."); return; }
+        var sep = journalText.value ? (/\n\n$/.test(journalText.value) ? "" : (/\n$/.test(journalText.value) ? "\n" : "\n\n")) : "";
+        journalText.value += sep + txt;
+        dirty = journalText.value.length > 0;
+        say("Textul a fost adăugat în jurnal (" + txt.length + " caractere).");
+      };
+      r.readAsText(f);
+    });
+    inp.click();
+  });
   $("journalClear").addEventListener("click", function(){
     if(!journalText.value) return;
     if(confirm("Golești tot jurnalul? Această acțiune nu poate fi anulată.")){
@@ -905,8 +934,10 @@
   SUITS.forEach(function(su){ RANKS.forEach(function(r){ DECK.push(r + " de " + su); }); });
   var drawResult = $("drawResult"), drawToJournal = $("drawToJournal"), lastDraw = null;
   var POSITIONS = ["Situație","Acțiune","Rezultat probabil"];
+  function kindOf(c){ return DECK.indexOf(c) < MAJORS.length ? "Arcană Majoră" : "Arcană Minoră"; }
   function draw(n){
-    var cards = shuffle(DECK.slice()).slice(0, n);
+    var which = $("drawDeck").value, pool = which === "major" ? DECK.slice(0, MAJORS.length) : (which === "minor" ? DECK.slice(MAJORS.length) : DECK.slice());
+    var cards = shuffle(pool).slice(0, n);
     lastDraw = cards;
     drawResult.textContent = "";
     var ol = document.createElement("ol");
@@ -917,6 +948,10 @@
       sp.className = "cname";
       sp.textContent = c;
       li.appendChild(sp);
+      var ck = document.createElement("span");
+      ck.className = "ckind";
+      ck.textContent = kindOf(c);
+      li.appendChild(ck);
       ol.appendChild(li);
     });
     drawResult.appendChild(ol);
