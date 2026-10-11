@@ -42,6 +42,13 @@ Verificate în cod și în browser:
 - Afirmațiile istorice sunt prezentate pe scurt; rândurile despre certificări și cursuri din România sunt marcate ca neverificate.
 - Nu include imaginile cărților; extragerea afișează doar nume.
 
+## Istoric / Changelog
+
+Ultima actualizare: 11 octombrie 2026.
+
+- Pagina are acum un titlu de nivel 1 în zona principală, vizibil cititoarelor de ecran și pe mobil (meniul lateral este ascuns acolo); aspectul vizibil nu s-a schimbat. axe-core: 0 violări la 1280 și 360 px.
+- Conținutul rămâne fără imagini ale cărților și fără interpretări per carte (alegere de conținut a autorului, neschimbată).
+
 ## Rulare locală / offline
 
 Descarcă `index.html` și deschide-l în browser; funcționează fără internet.

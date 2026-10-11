@@ -47,7 +47,7 @@
   .sidebar{width:272px;flex:0 0 272px;background:var(--sidebar-bg);color:#E8D9C4;padding:28px 20px 40px;position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid #4A1D2C}
   .brand{margin-bottom:26px}
   .brand .mark{width:56px;height:56px;margin-bottom:12px;display:block}
-  .brand h1{font-family:var(--serif);font-size:1.5rem;font-weight:700;margin:0 0 4px;color:#F3E9D2;letter-spacing:.01em}
+  .brand .brand-title{font-family:var(--serif);font-size:1.5rem;font-weight:700;margin:0 0 4px;color:#F3E9D2;letter-spacing:.01em}
   .brand p{margin:0;font-size:.82rem;color:#B89578;max-width:24ch}
   .navgroup{margin-top:22px}
   .navgroup h2{font-size:.72rem;color:#A98B73;margin:0 0 8px;font-weight:700;letter-spacing:.05em}
@@ -265,7 +265,7 @@
         <rect x="28" y="18" width="44" height="64" rx="2" fill="none" stroke="#C9A227" stroke-width="1" opacity=".6"/>
         <path d="M50 34 L58 50 L50 66 L42 50 Z" fill="#C9A227" opacity=".85"/>
       </svg>
-      <h1>Tarot</h1>
+      <p class="brand-title">Tarot</p>
       <p>Curs interactiv despre istoria, structura și practica tarotului</p>
     </div>
     <div class="navgroup">
@@ -298,6 +298,7 @@
   </nav>
 
   <main class="content" id="main" tabindex="-1">
+    <h1 class="visually-hidden">Tarot — curs interactiv</h1>
     <noscript><div class="note">JavaScript este dezactivat: căutarea, jurnalul, testul și celelalte unelte interactive nu funcționează, dar tot conținutul cursului este afișat mai jos.</div></noscript>
     <div class="toolbar">
       <div class="search-wrap">
