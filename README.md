@@ -1,5 +1,7 @@
 # Tarot — curs interactiv
 
+**Versiune:** 1.0.0 · **Ultima actualizare:** 12 octombrie 2026
+
 Curs în română despre istoria, structura și practica tarotului, într-un singur fișier HTML, fără cont și fără server.
 
 **Live:** https://chiuta.github.io/Tarot/
@@ -45,8 +47,7 @@ Verificate în cod și în browser:
 
 ## Istoric / Changelog
 
-Ultima actualizare: 11 octombrie 2026.
-
+- 1.0.0 — 2026-10-12: versiunea și data ultimei actualizări sunt afișate în aplicație
 - Căutarea afișează acum fragmentul în care apare termenul (înainte, interogări precum „Turnul” arătau doar titlul secțiunii) și evidențiază potrivirea în text la selectare.
 - Adăugat: alegerea pachetului la extragere, eticheta Arcană Majoră/Minoră, „Încarcă (.txt)” în jurnal; CSP: `script-src` pe hash SHA-256, fără `'unsafe-inline'`; titlurile cardurilor din „Structura pachetului” și „Aplicații practice” sunt acum h3 (ordine corectă a titlurilor în aceste două secțiuni; axe-core: 0 violări pe toate cele 12 secțiuni, 1280 px).
 - Pagina are acum un titlu de nivel 1 în zona principală, vizibil cititoarelor de ecran și pe mobil (meniul lateral este ascuns acolo); aspectul vizibil nu s-a schimbat. axe-core: 0 violări la 1280 și 360 px.
