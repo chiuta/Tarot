@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "slug": "tarot",
+  "name": "Tarot — curs interactiv",
+  "version": "1.1.0",
+  "updated": "2026-10-14",
+  "description": "Curs interactiv despre tarot: istoric, structura pachetului de 78 de cărți, patru niveluri de curs, exerciții practice, diagrama Călătoriei Nebunului, anexă comparativă pe tradiții (Marsilia, Rider-Waite-Smith, Thoth), glosar, jurnal și autoevaluare. Aplicație offline, fără frontiere.",
+  "egress": [],
+  "permissions": [
+    "navigator.share",
+    "clipboard",
+    "serviceWorker",
+    "Web Crypto"
+  ],
+  "storageKeys": [],
+  "sizeBytes": 154640,
+  "sha256": "5463f7a18456795ef77a8ef946e9b6ad390e041c8318687fdb2de9a614de7240",
+  "csp": {
+    "present": true,
+    "directives": {
+      "default-src": "'none'",
+      "script-src": "sha256×3",
+      "style-src": "'unsafe-inline'",
+      "img-src": "'self' data: blob:",
+      "font-src": "'none'",
+      "connect-src": "'none'",
+      "media-src": "'none'",
+      "object-src": "'none'",
+      "frame-src": "'none'",
+      "base-uri": "'none'",
+      "form-action": "'none'",
+      "manifest-src": "'self'",
+      "worker-src": "'self'"
+    },
+    "scriptInline": "hash",
+    "connect": "'none'"
+  },
+  "features": {
+    "export": true,
+    "import": true,
+    "i18n": [],
+    "pwa": {
+      "manifest": true,
+      "serviceWorker": true
+    },
+    "modules": [
+      "core",
+      "label",
+      "bundle"
+    ]
+  },
+  "kit": {
+    "version": "1.0.0",
+    "modules": [
+      "core",
+      "label",
+      "bundle"
+    ]
+  },
+  "selfSerializing": false
+}

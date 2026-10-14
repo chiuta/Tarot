@@ -1,6 +1,6 @@
 # Tarot — curs interactiv
 
-**Versiune:** 1.0.0 · **Ultima actualizare:** 12 octombrie 2026
+**Versiune:** 1.1.0 · **Ultima actualizare:** 14 octombrie 2026
 
 Curs în română despre istoria, structura și practica tarotului, într-un singur fișier HTML, fără cont și fără server.
 
@@ -46,6 +46,8 @@ Verificate în cod și în browser:
 - Nu include imaginile cărților; extragerea afișează doar nume.
 
 ## Istoric / Changelog
+
+- 1.1.0 — 2026-10-14: Copie de rezervă și etichetare date (fff-kit).
 
 - 1.0.0 — 2026-10-12: versiunea și data ultimei actualizări sunt afișate în aplicație
 - Căutarea afișează acum fragmentul în care apare termenul (înainte, interogări precum „Turnul” arătau doar titlul secțiunii) și evidențiază potrivirea în text la selectare.
