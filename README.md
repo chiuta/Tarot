@@ -61,7 +61,7 @@ Descarcă `index.html` și deschide-l în browser; funcționează fără interne
 
 ## Licență
 
-Licența nu este încă declarată.
+MIT — vezi fișierul LICENSE.
 
 ## Autor
 
@@ -69,4 +69,4 @@ Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 
 ## English summary
 
-A single-file, offline Romanian-language course on tarot as a cultural and symbolic tradition: history, the 78-card structure, four course levels, deck comparison, glossary, journal and a 10-question quiz, plus a random draw tool (Fisher–Yates with `crypto.getRandomValues`). No storage, no external requests, no telemetry. Tarot is presented as tradition and entertainment, with no scientific evidence of predictive power; it is not a substitute for medical, legal or financial advice. License not yet declared.
+A single-file, offline Romanian-language course on tarot as a cultural and symbolic tradition: history, the 78-card structure, four course levels, deck comparison, glossary, journal and a 10-question quiz, plus a random draw tool (Fisher–Yates with `crypto.getRandomValues`). No storage, no external requests, no telemetry. Tarot is presented as tradition and entertainment, with no scientific evidence of predictive power; it is not a substitute for medical, legal or financial advice. License: MIT (see the LICENSE file).
