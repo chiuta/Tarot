@@ -1,72 +1,74 @@
-# Tarot — curs interactiv
+# Tarot — interactive course
 
-**Versiune:** 1.1.0 · **Ultima actualizare:** 14 octombrie 2026
+**English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-Curs în română despre istoria, structura și practica tarotului, într-un singur fișier HTML, fără cont și fără server.
+**Version:** 1.1.0 · **Last updated:** 2026-10-14
 
-**Live:** https://chiuta.github.io/Tarot/
+A course in Romanian on the history, structure and practice of tarot, in a single HTML file, with no account and no server.
 
-![Captura de ecran](screenshot.png)
+**Live app:** https://chiuta.github.io/Tarot/
 
-## Ce este
+![Screenshot](screenshot.png)
 
-Un mic curs interactiv despre tarot ca tradiție culturală și simbolică: istoric, structura pachetului de 78 de cărți, patru niveluri de curs cu exerciții, o comparație a tradițiilor (Marsilia, Rider-Waite-Smith, Thoth), glosar, jurnal și autoevaluare. Tarotul este tratat ca instrument de reflecție și divertisment, nu ca metodă științifică.
+## What it is
 
-## Funcții
+A small interactive course on tarot as a cultural and symbolic tradition: history, the structure of the 78-card deck, four course levels with exercises, a comparison of traditions (Marseille, Rider-Waite-Smith, Thoth), a glossary, a journal and a self-assessment. Tarot is treated as a tool for reflection and entertainment, not as a scientific method.
 
-Secțiuni (meniul din stânga, ☰ pe mobil): Introducere, Istoric, Structura pachetului, cele patru niveluri (Fundamente, Arcanele Majore cu diagrama Călătoriei Nebunului, Arcanele Minore, Citire profesională), Aplicații practice, Tradiții și pachete, Glosar, Jurnal, Autoevaluare.
+## Features
 
-Verificate în cod și în browser:
-- Extragere aleatorie de 1 sau 3 cărți dintr-un pachet virtual de 78 (amestecare Fisher–Yates cu `crypto.getRandomValues`, fără repetiții); se afișează doar numele cărților; rezultatul se poate adăuga în jurnal.
-- Alegerea pachetului pentru extragere (complet 78 / doar Arcanele Majore 22 / doar Arcanele Minore 56); fiecare carte extrasă arată și apartenența structurală („Arcană Majoră” / „Arcană Minoră”), fără interpretări.
-- Căutare în curs, fără sensibilitate la diacritice; fiecare rezultat arată un fragment de text cu termenul evidențiat, iar la alegere pagina derulează la locul respectiv și îl marchează.
-- Link direct la o secțiune (`#istoric`, `#quiz` etc.), butoanele Înapoi/Înainte ale browserului funcționează.
-- Jurnal descărcabil ca `.txt` și „Încarcă (.txt)” (adaugă textul unui fișier ales, până la 1 MB, la jurnalul curent; nu se salvează nimic în browser); test de 10 întrebări cu ordinea răspunsurilor amestecată.
-- Printare (doar secțiunea curentă), distribuire/copiere link, ecran complet, păstrare ecran activ (unde browserul le acceptă).
+Sections (left-hand menu, ☰ on mobile): Introduction, History, Structure of the deck, the four levels (Foundations, the Major Arcana with the Fool's Journey diagram, the Minor Arcana, Professional reading), Practical applications, Traditions and decks, Glossary, Journal, Self-assessment.
 
-## Manual de utilizare
+Verified in the code and in the browser:
+- Random draw of 1 or 3 cards from a virtual 78-card deck (Fisher–Yates shuffle with `crypto.getRandomValues`, no repetitions); only the card names are shown; the result can be added to the journal.
+- Choice of deck for the draw (full 78 / Major Arcana only, 22 / Minor Arcana only, 56); each drawn card also shows its structural membership ("Major Arcana" / "Minor Arcana"), without interpretations.
+- Search within the course, diacritics-insensitive; each result shows a text excerpt with the term highlighted, and on selection the page scrolls to that spot and marks it.
+- Direct link to a section (`#istoric`, `#quiz`, etc.); the browser's Back/Forward buttons work.
+- Journal downloadable as `.txt` and "Upload (.txt)" (adds the text of a chosen file, up to 1 MB, to the current journal; nothing is saved in the browser); 10-question quiz with shuffled answer order.
+- Printing (current section only), sharing/copying the link, full screen, keeping the screen awake (where the browser supports them).
 
-1. Alege o secțiune din meniu (pe mobil apasă ☰).
-2. Citește nivelurile în ordine și încearcă exercițiile practice.
-3. În „Aplicații practice” apasă „Extrage o carte” sau „Extrage 3 cărți”; interpretarea o faci tu, cu pachetul tău.
-4. Notează în „Jurnal”; apasă „Descarcă (.txt)” înainte să închizi pagina — jurnalul nu se salvează.
-5. În „Autoevaluare” răspunde la cele 10 întrebări; „Reia testul” amestecă din nou răspunsurile.
+## User guide
 
-## Confidențialitate și rețea
+1. Choose a section from the menu (on mobile, tap ☰).
+2. Read the levels in order and try the practical exercises.
+3. In "Practical applications" press "Draw one card" or "Draw 3 cards"; the interpretation is up to you, with your own deck.
+4. Take notes in the "Journal"; press "Download (.txt)" before closing the page — the journal is not saved.
+5. In "Self-assessment" answer the 10 questions; "Retake the test" shuffles the answers again.
 
-- Stocare: nu folosește `localStorage`, `sessionStorage`, IndexedDB sau cookie-uri. Jurnalul există doar în pagină; la închidere/reîncărcare browserul te avertizează dacă ai text nesalvat.
-- Rețea: nu face nicio cerere externă (fără fonturi, scripturi, imagini sau analitice). Pagina are o politică CSP (`default-src 'none'`) care blochează conexiunile. Nu există linkuri externe.
-- Permisiuni: nu cere nimic la încărcare. La apăsarea butoanelor pot fi folosite: ecran complet, wake lock (ecran activ), clipboard (copiere link) și vibrații pe mobil la răspunsurile din test.
+## Privacy and network
 
-## Limite și avertismente
+- Storage: it does not use `localStorage`, `sessionStorage`, IndexedDB or cookies. The journal exists only on the page; on closing/reloading the browser warns you if you have unsaved text.
+- Network: it makes no external requests (no fonts, scripts, images or analytics). The page has a CSP policy (`default-src 'none'`) that blocks connections. There are no external links.
+- Permissions: it asks for nothing on load. When you press buttons, the following may be used: full screen, wake lock (screen kept awake), clipboard (link copying) and vibration on mobile for quiz answers.
 
-- Tarotul este o tradiție culturală și un instrument de reflecție/divertisment. Nu există dovezi științifice că poate prezice viitorul, diagnostica sau vindeca.
-- Conținutul este educațional și nu înlocuiește sfatul unui medic, psiholog, jurist sau consilier financiar. Nu renunța la un tratament și nu lua decizii importante pe baza unei extrageri.
-- Afirmațiile istorice sunt prezentate pe scurt; rândurile despre certificări și cursuri din România sunt marcate ca neverificate.
-- Nu include imaginile cărților; extragerea afișează doar nume.
+## Limits and warnings
 
-## Istoric / Changelog
+- Tarot is a cultural tradition and a tool for reflection/entertainment. There is no scientific evidence that it can predict the future, diagnose or heal.
+- The content is educational and does not replace the advice of a doctor, psychologist, lawyer or financial adviser. Do not give up a treatment and do not make important decisions on the basis of a draw.
+- Historical claims are presented briefly; the lines about certifications and courses in Romania are marked as unverified.
+- It does not include card images; the draw shows names only.
 
-- 1.1.0 — 2026-10-14: Copie de rezervă și etichetare date (fff-kit).
+## History / Changelog
 
-- 1.0.0 — 2026-10-12: versiunea și data ultimei actualizări sunt afișate în aplicație
-- Căutarea afișează acum fragmentul în care apare termenul (înainte, interogări precum „Turnul” arătau doar titlul secțiunii) și evidențiază potrivirea în text la selectare.
-- Adăugat: alegerea pachetului la extragere, eticheta Arcană Majoră/Minoră, „Încarcă (.txt)” în jurnal; CSP: `script-src` pe hash SHA-256, fără `'unsafe-inline'`; titlurile cardurilor din „Structura pachetului” și „Aplicații practice” sunt acum h3 (ordine corectă a titlurilor în aceste două secțiuni; axe-core: 0 violări pe toate cele 12 secțiuni, 1280 px).
-- Pagina are acum un titlu de nivel 1 în zona principală, vizibil cititoarelor de ecran și pe mobil (meniul lateral este ascuns acolo); aspectul vizibil nu s-a schimbat. axe-core: 0 violări la 1280 și 360 px.
-- Conținutul rămâne fără imagini ale cărților și fără interpretări per carte (alegere de conținut a autorului, neschimbată).
+- 1.1.0 — 2026-10-14: Backup and data labelling (fff-kit).
 
-## Rulare locală / offline
+- 1.0.0 — 2026-10-12: the version and the date of the last update are shown in the app
+- Search now shows the excerpt in which the term appears (previously, queries such as "The Tower" showed only the section title) and highlights the match in the text on selection.
+- Added: choice of deck for the draw, the Major/Minor Arcana label, "Upload (.txt)" in the journal; CSP: `script-src` by SHA-256 hash, no `'unsafe-inline'`; the card titles in "Structure of the deck" and "Practical applications" are now h3 (correct heading order in these two sections; axe-core: 0 violations on all 12 sections, 1280 px).
+- The page now has a level-1 heading in the main area, visible to screen readers and on mobile (the side menu is hidden there); the visible appearance did not change. axe-core: 0 violations at 1280 and 360 px.
+- The content remains without card images and without per-card interpretations (a content choice by the author, unchanged).
 
-Descarcă `index.html` și deschide-l în browser; funcționează fără internet.
+## Running locally / offline
 
-## Licență
+Download `index.html` and open it in the browser; it works without internet.
 
-MIT — vezi fișierul LICENSE.
+## License
 
-## Autor
+MIT — see the LICENSE file.
+
+## Author
 
 Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 
-## English summary
+## Summary
 
-A single-file, offline Romanian-language course on tarot as a cultural and symbolic tradition: history, the 78-card structure, four course levels, deck comparison, glossary, journal and a 10-question quiz, plus a random draw tool (Fisher–Yates with `crypto.getRandomValues`). No storage, no external requests, no telemetry. Tarot is presented as tradition and entertainment, with no scientific evidence of predictive power; it is not a substitute for medical, legal or financial advice. License: MIT (see the LICENSE file).
+A single-file, offline course in Romanian on tarot as a cultural and symbolic tradition: history, the 78-card structure, four course levels, deck comparison, glossary, journal and a 10-question quiz, plus a random draw tool (Fisher–Yates with `crypto.getRandomValues`). No storage, no external requests, no telemetry. Tarot is presented as tradition and entertainment, with no scientific evidence of predictive power; it is not a substitute for medical, legal or financial advice. License: MIT (see the LICENSE file).
