@@ -10,7 +10,7 @@ Curs în română despre istoria, structura și practica tarotului, într-un sin
 
 **Live:** https://chiuta.github.io/Tarot/
 
-![Captura de ecran](screenshot.png)
+![Captura de ecran](screenshot.ro.png)
 
 ## Ce este
 

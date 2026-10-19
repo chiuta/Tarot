@@ -10,7 +10,7 @@ Corso in rumeno sulla storia, la struttura e la pratica dei tarocchi, in un unic
 
 **Applicazione online:** https://chiuta.github.io/Tarot/
 
-![Schermata](screenshot.png)
+![Schermata](screenshot.it.png)
 
 ## Che cos'è
 

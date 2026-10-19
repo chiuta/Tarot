@@ -10,7 +10,7 @@ Curso en rumano sobre la historia, la estructura y la práctica del tarot, en un
 
 **Aplicación en línea:** https://chiuta.github.io/Tarot/
 
-![Captura de pantalla](screenshot.png)
+![Captura de pantalla](screenshot.es.png)
 
 ## Qué es
 

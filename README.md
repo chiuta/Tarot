@@ -10,7 +10,7 @@ A course in Romanian on the history, structure and practice of tarot, in a singl
 
 **Live app:** https://chiuta.github.io/Tarot/
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.en.png)
 
 ## What it is
 

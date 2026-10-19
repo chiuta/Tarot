@@ -10,7 +10,7 @@ Ein Kurs auf Rumänisch über Geschichte, Aufbau und Praxis des Tarots, in einer
 
 **Online-Anwendung:** https://chiuta.github.io/Tarot/
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.de.png)
 
 ## Was es ist
 

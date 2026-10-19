@@ -10,7 +10,7 @@ Román nyelvű tanfolyam a tarot történetéről, felépítéséről és gyakor
 
 **Online alkalmazás:** https://chiuta.github.io/Tarot/
 
-![Képernyőkép](screenshot.png)
+![Képernyőkép](screenshot.hu.png)
 
 ## Mi ez
 
