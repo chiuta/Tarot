@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 1.2.1 · **Última atualização:** 2026-10-19
+**Versão:** 1.2.2 · **Última atualização:** 2026-10-22
 
 Idiomas da interface: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -50,6 +50,8 @@ Verificado no código e no navegador:
 - Não inclui as imagens das cartas; a extração mostra apenas nomes.
 
 ## Histórico / Changelog
+
+- 1.2.2 — 2026-10-22: As caixas confirm()/prompt() do navegador substituídas por diálogos próprios traduzidos nos 8 idiomas (limpar o diário, cópia manual da ligação).
 
 - 1.1.0 — 2026-10-14: Cópia de segurança e etiquetagem de dados (fff-kit).
 

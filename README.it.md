@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 1.2.1 · **Ultimo aggiornamento:** 2026-10-19
+**Versione:** 1.2.2 · **Ultimo aggiornamento:** 2026-10-22
 
 Lingue dell'interfaccia: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -50,6 +50,8 @@ Verificato nel codice e nel browser:
 - Non include le immagini delle carte; l'estrazione mostra solo i nomi.
 
 ## Cronologia / Changelog
+
+- 1.2.2 — 2026-10-22: Le finestre confirm()/prompt() del browser sostituite da finestre di dialogo proprie, tradotte nelle 8 lingue (svuotamento del diario, copia manuale del link).
 
 - 1.1.0 — 2026-10-14: Copia di riserva ed etichettatura dei dati (fff-kit).
 
