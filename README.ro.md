@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.2.6 · **Ultima actualizare:** 2026-10-26
+**Versiune:** 2.0.0 · **Ultima actualizare:** 2026-10-26
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -50,6 +50,10 @@ Verificate în cod și în browser:
 - Nu include imaginile cărților; extragerea afișează doar nume.
 
 ## Istoric / Changelog
+
+### 2.0.0 — 2026-10-26
+
+Secțiune nouă „Jurnal de întrebări”: întrebare/temă, extragere de 1 sau 3 cărți, note de simbolism cultural și artistic (22 de Arcane Majore, culorile Arcanelor Minore), întrebări de reflecție și istoric salvat local doar la cerere (căutare, export .txt/.json, ștergere). Instrument de reflecție, nu de predicție. Test: `tests/intrebari.test.mjs`.
 
 ### 1.2.4 — 2026-10-22
 
