@@ -2,7 +2,9 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 2.0.0 · **Last updated:** 2026-10-26
+**Version:** 2.0.1 · **Last updated:** 2026-10-27
+
+**Status:** stable · **Offline:** complete (no network requests)
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -48,6 +50,10 @@ Verified in the code and in the browser:
 - The content is educational and does not replace the advice of a doctor, psychologist, lawyer or financial adviser. Do not give up a treatment and do not make important decisions on the basis of a draw.
 - Historical claims are presented briefly; the lines about certifications and courses in Romania are marked as unverified.
 - It does not include card images; the draw shows names only.
+
+## Deck images: history in text, pictures planned (2026-10-27)
+
+The "History" section now ends with a note (8 languages) on the images of the decks: the app contains **no card images**; it describes Marseille (print shops such as Noblet, Dodal, Conver) and Rider-Waite-Smith (1909, W. Rider & Son; Pamela Colman Smith 1878-1951, A. E. Waite 1857-1942) in text, states that the 1909 edition is public domain in the US and, by life+70, in the EU/UK, but that every scan, restoration or modern edition may carry its own rights. A pictorial history is **planned**, only with images whose licence is checked one by one and embedded locally (no run-time downloads).
 
 ## History / Changelog
 
