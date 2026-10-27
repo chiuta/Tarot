@@ -2,7 +2,9 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 2.0.0 · **Ultima actualizare:** 2026-10-26
+**Versiune:** 2.0.1 · **Ultima actualizare:** 2026-10-27
+
+**Stare:** stabil · **Offline:** complet (fără cereri de rețea)
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -48,6 +50,10 @@ Verificate în cod și în browser:
 - Conținutul este educațional și nu înlocuiește sfatul unui medic, psiholog, jurist sau consilier financiar. Nu renunța la un tratament și nu lua decizii importante pe baza unei extrageri.
 - Afirmațiile istorice sunt prezentate pe scurt; rândurile despre certificări și cursuri din România sunt marcate ca neverificate.
 - Nu include imaginile cărților; extragerea afișează doar nume.
+
+## Imaginile pachetelor: istoric în text, imagini planificate (2026-10-27)
+
+Secțiunea „Istoric” se încheie acum cu o notă (8 limbi) despre imaginile pachetelor: aplicația **nu conține imagini de cărți**; descrie în text Marsilia (tipografii precum Noblet, Dodal, Conver) și Rider-Waite-Smith (1909, W. Rider & Son; Pamela Colman Smith 1878-1951, A. E. Waite 1857-1942), precizează că ediția din 1909 e în domeniul public în SUA și, prin viață+70, în UE/Marea Britanie, dar că fiecare scanare, restaurare sau ediție modernă poate avea propriile drepturi. Un istoric în imagini este **planificat**, doar cu imagini a căror licență e verificată una câte una și înglobate local (fără descărcări la rulare).
 
 ## Istoric / Changelog
 
