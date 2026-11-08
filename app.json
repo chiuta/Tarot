@@ -2,8 +2,8 @@
   "schema": 1,
   "slug": "tarot",
   "name": "Tarot — curs interactiv",
-  "version": "2.0.2",
-  "updated": "2026-11-07",
+  "version": "2.0.3",
+  "updated": "2026-11-08",
   "description": "Curs interactiv despre tarot: istoric, structura pachetului de 78 de cărți, patru niveluri de curs, exerciții practice, diagrama Călătoriei Nebunului, anexă comparativă pe tradiții (Marsilia, Rider-Waite-Smith, Thoth), glosar, jurnal și autoevaluare. Aplicație offline, fără frontiere.",
   "egress": [],
   "permissions": [
@@ -16,8 +16,8 @@
   "storageKeys": [
     "tarot.istoric"
   ],
-  "sizeBytes": 546307,
-  "sha256": "3f092c783702eadbcec5b8f6b1c875ebf5475bccc794df2b5f35ee48f1625ba9",
+  "sizeBytes": 559992,
+  "sha256": "1b8851a76d33be19e53349bb3afcacb307eb531b8b392a0338a8ca3b7580b196",
   "csp": {
     "present": true,
     "directives": {
@@ -59,6 +59,7 @@
       "core",
       "store",
       "dialog",
+      "exit",
       "label",
       "bundle",
       "qr",
@@ -68,11 +69,12 @@
     ]
   },
   "kit": {
-    "version": "1.2.1",
+    "version": "1.3.0",
     "modules": [
       "core",
       "store",
       "dialog",
+      "exit",
       "label",
       "bundle",
       "qr",
