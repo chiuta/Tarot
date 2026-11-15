@@ -11,18 +11,19 @@
     "clipboard",
     "serviceWorker",
     "localStorage",
-    "Web Crypto"
+    "Web Crypto",
+    "WebGL"
   ],
   "storageKeys": [
     "tarot.istoric"
   ],
-  "sizeBytes": 598811,
-  "sha256": "a1ee3ece24699844b2c3323fa24309a8c6f83a7a320876c735849cc02f127627",
+  "sizeBytes": 650822,
+  "sha256": "d7b1e4dec93028ac607dcca8cf5a28d117b211d3d589b706cfd46e854117640c",
   "csp": {
     "present": true,
     "directives": {
       "default-src": "'none'",
-      "script-src": "sha256×4",
+      "script-src": "sha256×5",
       "style-src": "'unsafe-inline'",
       "img-src": "'self' data: blob:",
       "font-src": "'none'",
